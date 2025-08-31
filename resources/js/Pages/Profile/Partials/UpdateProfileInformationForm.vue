@@ -5,8 +5,7 @@ import ActionMessage from '@/Components/ActionMessage.vue';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
+import { Button } from '@/Components/ui/button';
 import TextInput from '@/Components/TextInput.vue';
 
 const props = defineProps({
@@ -112,18 +111,19 @@ const clearPhotoFileInput = () => {
                     />
                 </div>
 
-                <SecondaryButton class="mt-2 me-2" type="button" @click.prevent="selectNewPhoto">
+                <Button variant="outline" class="mt-2 me-2" type="button" @click.prevent="selectNewPhoto">
                     Select A New Photo
-                </SecondaryButton>
+                </Button>
 
-                <SecondaryButton
+                <Button
                     v-if="user.profile_photo_path"
+                    variant="outline"
                     type="button"
                     class="mt-2"
                     @click.prevent="deletePhoto"
                 >
                     Remove Photo
-                </SecondaryButton>
+                </Button>
 
                 <InputError :message="form.errors.photo" class="mt-2" />
             </div>
@@ -182,9 +182,9 @@ const clearPhotoFileInput = () => {
                 Saved.
             </ActionMessage>
 
-            <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+            <Button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                 Save
-            </PrimaryButton>
+            </Button>
         </template>
     </FormSection>
 </template>

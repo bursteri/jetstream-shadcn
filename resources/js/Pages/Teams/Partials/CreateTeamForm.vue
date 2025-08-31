@@ -3,7 +3,7 @@ import { useForm } from '@inertiajs/vue3';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
+import { Button } from '@/Components/ui/button';
 import TextInput from '@/Components/TextInput.vue';
 
 const form = useForm({
@@ -58,9 +58,9 @@ const createTeam = () => {
         </template>
 
         <template #actions>
-            <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+            <Button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                 Create
-            </PrimaryButton>
+            </Button>
         </template>
     </FormSection>
 </template>

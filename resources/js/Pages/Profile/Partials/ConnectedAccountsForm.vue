@@ -4,11 +4,9 @@ import {useForm, usePage} from '@inertiajs/vue3';
 import ActionLink from '@/Components/ActionLink.vue';
 import ActionSection from '@/Components/ActionSection.vue';
 import ConnectedAccount from '@/Components/ConnectedAccount.vue';
-import DangerButton from '@/Components/DangerButton.vue';
+import { Button } from '@/Components/ui/button';
 import DialogModal from '@/Components/DialogModal.vue';
 import InputError from '@/Components/InputError.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 
 const accountId = ref(null);
@@ -87,10 +85,10 @@ const closeModal = () => {
                                         Use Avatar as Profile Photo
                                     </button>
 
-                                    <DangerButton @click="confirmRemoveAccount(getAccountForProvider(provider).id)"
+                                    <Button variant="destructive" @click="confirmRemoveAccount(getAccountForProvider(provider).id)"
                                                   v-if="$page.props.socialstream.connectedAccounts.length > 1 || $page.props.socialstream.hasPassword">
                                         Remove
-                                    </DangerButton>
+                                    </Button>
                                 </div>
                             </template>
 
@@ -129,14 +127,14 @@ const closeModal = () => {
                 </template>
 
                 <template #footer>
-                    <SecondaryButton @click="closeModal">
+                    <Button variant="outline" @click="closeModal">
                         Cancel
-                    </SecondaryButton>
+                    </Button>
 
-                    <PrimaryButton class="ml-2" @click="removeAccount"
+                    <Button class="ml-2" @click="removeAccount"
                                    :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                         Remove Account
-                    </PrimaryButton>
+                    </Button>
                 </template>
             </DialogModal>
         </template>

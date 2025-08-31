@@ -1,9 +1,3 @@
-<script lang="ts">
-export const description = 'A sidebar that collapses to icons.';
-export const iframeHeight = '800px';
-export const containerClass = 'w-full h-full';
-</script>
-
 <script setup lang="ts">
 import AppSidebar from '@/Components/AppSidebar.vue';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/Components/ui/breadcrumb';
@@ -16,7 +10,7 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/Components/ui/s
         <AppSidebar />
         <SidebarInset>
             <header
-                class="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12"
+                class="flex h-16 border-b border-zinc-900/5 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12"
             >
                 <div class="flex items-center gap-2 px-4">
                     <SidebarTrigger class="-ml-1" />
@@ -34,13 +28,13 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/Components/ui/s
                     </Breadcrumb>
                 </div>
             </header>
-            <div class="flex flex-1 flex-col gap-4 p-4 pt-0">
+            <div class="flex flex-1 flex-col gap-4 p-4">
                 <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-                    <div class="bg-muted/50 aspect-video rounded-xl" />
-                    <div class="bg-muted/50 aspect-video rounded-xl" />
-                    <div class="bg-muted/50 aspect-video rounded-xl" />
+                    <div class="bg-zinc-50 aspect-video rounded-xl border border-zinc-900/5" />
+                    <div class="bg-zinc-50 aspect-video rounded-xl border border-zinc-900/5" />
+                    <div class="bg-zinc-50 aspect-video rounded-xl border border-zinc-900/5" />
                 </div>
-                <div class="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min" />
+                <div class="bg-zinc-50 min-h-[100vh] flex-1 rounded-xl border border-zinc-900/5 md:min-h-min" />
             </div>
         </SidebarInset>
     </SidebarProvider>

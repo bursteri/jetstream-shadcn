@@ -145,7 +145,7 @@ const data = {
 </script>
 
 <template>
-    <Sidebar v-bind="props">
+    <Sidebar v-bind="props" variant="inset">
         <SidebarHeader>
             <TeamSwitcher :teams="data.teams" />
         </SidebarHeader>
@@ -154,6 +154,7 @@ const data = {
             <NavProjects :projects="data.projects" />
         </SidebarContent>
         <SidebarFooter>
+            <NavProjects :projects="data.projects" />
             <NavUser :user="data.user" />
         </SidebarFooter>
         <SidebarRail />
