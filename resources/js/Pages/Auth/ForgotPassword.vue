@@ -1,11 +1,11 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+
+import { Button } from '@/Components/ui/button';
+import { Input } from '@/Components/ui/input';
+import { Label } from '@/Components/ui/label';
 
 defineProps({
     status: String,
@@ -23,39 +23,39 @@ const submit = () => {
 <template>
     <Head title="Forgot Password" />
 
-    <AuthenticationCard>
-        <template #logo>
-            <AuthenticationCardLogo />
-        </template>
-
-        <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-            Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
-        </div>
-
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
+    <AuthenticationCard Title="Forgot your password?" Description="No problem. Just let us know your email address and we will email you a password reset link.">
+        <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
             {{ status }}
         </div>
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
-                <TextInput
+        <form @submit.prevent="submit" class="grid gap-4">
+            <div class="grid gap-2">
+                <Label for="email">Email</Label>
+                <Input
                     id="email"
                     v-model="form.email"
                     type="email"
-                    class="mt-1 block w-full"
+                    placeholder="m@example.com"
                     required
                     autofocus
                     autocomplete="username"
                 />
-                <InputError class="mt-2" :message="form.errors.email" />
+                <InputError :message="form.errors.email" />
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Email Password Reset Link
-                </PrimaryButton>
-            </div>
+            <Button 
+                type="submit"
+                class="w-full"
+                :disabled="form.processing"
+                :class="{ 'opacity-50': form.processing }"
+            >
+                {{ form.processing ? 'Sending...' : 'Email Password Reset Link' }}
+            </Button>
         </form>
+
+        <div class="mt-4 text-center text-sm">
+            Remember your password?
+            <Link :href="route('login')" class="underline">Sign in</Link>
+        </div>
     </AuthenticationCard>
 </template>

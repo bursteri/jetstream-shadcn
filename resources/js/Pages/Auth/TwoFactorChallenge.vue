@@ -2,11 +2,11 @@
 import { nextTick, ref } from 'vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+
+import { Button } from '@/Components/ui/button';
+import { Input } from '@/Components/ui/input';
+import { Label } from '@/Components/ui/label';
 
 const recovery = ref(false);
 
@@ -40,65 +40,55 @@ const submit = () => {
 <template>
     <Head title="Two-factor Confirmation" />
 
-    <AuthenticationCard>
-        <template #logo>
-            <AuthenticationCardLogo />
-        </template>
-
-        <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-            <template v-if="! recovery">
-                Please confirm access to your account by entering the authentication code provided by your authenticator application.
-            </template>
-
-            <template v-else>
-                Please confirm access to your account by entering one of your emergency recovery codes.
-            </template>
-        </div>
-
-        <form @submit.prevent="submit">
-            <div v-if="! recovery">
-                <InputLabel for="code" value="Code" />
-                <TextInput
+    <AuthenticationCard 
+        :Title="recovery ? 'Two-factor recovery' : 'Two-factor authentication'"
+        :Description="recovery ? 'Please confirm access to your account by entering one of your emergency recovery codes.' : 'Please confirm access to your account by entering the authentication code provided by your authenticator application.'"
+    >
+        <form @submit.prevent="submit" class="grid gap-4">
+            <div v-if="!recovery" class="grid gap-2">
+                <Label for="code">Authentication Code</Label>
+                <Input
                     id="code"
                     ref="codeInput"
                     v-model="form.code"
                     type="text"
                     inputmode="numeric"
-                    class="mt-1 block w-full"
+                    placeholder="000000"
                     autofocus
                     autocomplete="one-time-code"
                 />
-                <InputError class="mt-2" :message="form.errors.code" />
+                <InputError :message="form.errors.code" />
             </div>
 
-            <div v-else>
-                <InputLabel for="recovery_code" value="Recovery Code" />
-                <TextInput
+            <div v-else class="grid gap-2">
+                <Label for="recovery_code">Recovery Code</Label>
+                <Input
                     id="recovery_code"
                     ref="recoveryCodeInput"
                     v-model="form.recovery_code"
                     type="text"
-                    class="mt-1 block w-full"
+                    placeholder="xxxxx-xxxxx"
                     autocomplete="one-time-code"
                 />
-                <InputError class="mt-2" :message="form.errors.recovery_code" />
+                <InputError :message="form.errors.recovery_code" />
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <button type="button" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 underline cursor-pointer" @click.prevent="toggleRecovery">
-                    <template v-if="! recovery">
-                        Use a recovery code
-                    </template>
+            <Button 
+                type="submit"
+                class="w-full"
+                :disabled="form.processing"
+                :class="{ 'opacity-50': form.processing }"
+            >
+                {{ form.processing ? 'Verifying...' : 'Log in' }}
+            </Button>
 
-                    <template v-else>
-                        Use an authentication code
-                    </template>
-                </button>
-
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
-                </PrimaryButton>
-            </div>
+            <button 
+                type="button" 
+                class="text-sm text-center underline hover:no-underline" 
+                @click.prevent="toggleRecovery"
+            >
+                {{ recovery ? 'Use an authentication code' : 'Use a recovery code' }}
+            </button>
         </form>
     </AuthenticationCard>
 </template>

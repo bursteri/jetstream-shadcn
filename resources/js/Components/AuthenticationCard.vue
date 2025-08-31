@@ -1,11 +1,24 @@
-<template>
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
-        <div>
-            <slot name="logo" />
-        </div>
+<script setup lang="ts">
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Components/ui/card';
+import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
 
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
-            <slot />
-        </div>
+const props = defineProps<{
+    Title?: string;
+    Description?: string;
+}>();
+</script>
+
+<template>
+    <div class="flex min-h-screen flex-col items-center pt-6 sm:justify-center sm:pt-0">
+        <AuthenticationCardLogo />
+        <Card class="mx-auto mt-6 w-full max-w-sm">
+            <CardHeader>
+                <CardTitle class="text-xl"> {{ props.Title }} </CardTitle>
+                <CardDescription> {{ props.Description }} </CardDescription>
+            </CardHeader>
+            <CardContent>
+                <slot />
+            </CardContent>
+        </Card>
     </div>
 </template>
