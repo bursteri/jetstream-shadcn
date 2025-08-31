@@ -23,11 +23,11 @@ defineProps({
 <template>
     <div v-if="providers.length" class="space-y-6 mt-6 mb-2">
         <div class="relative flex items-center">
-            <div class="flex-grow border-t border-gray-400 dark:border-gray-500"></div>
-            <span class="flex-shrink text-gray-400 dark:text-gray-500 px-6">
+            <div class="grow border-t border-gray-400 dark:border-gray-500"></div>
+            <span class="shrink text-gray-400 dark:text-gray-500 px-6">
                 {{ prompt }}
              </span>
-            <div class="flex-grow border-t border-gray-400 dark:border-gray-500"></div>
+            <div class="grow border-t border-gray-400 dark:border-gray-500"></div>
         </div>
 
         <InputError v-if="error" :message="error" class="text-center"/>
