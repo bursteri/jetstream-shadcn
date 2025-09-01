@@ -91,7 +91,7 @@ const closeModal = () => {
                     <DialogDescription>{{ content }}</DialogDescription>
                 </DialogHeader>
 
-                <div class="mt-4">
+                <div>
                     <Input
                         ref="passwordInput"
                         v-model="form.password"
@@ -107,7 +107,7 @@ const closeModal = () => {
 
                 <DialogFooter>
                     <Button variant="outline" @click="closeModal"> Cancel </Button>
-                    <Button class="ms-3" :class="{ 'opacity-25': form.processing }" :disabled="form.processing" @click="confirmPassword">
+                    <Button :class="{ 'opacity-25': form.processing }" :disabled="form.processing" @click="confirmPassword">
                         {{ button }}
                     </Button>
                 </DialogFooter>

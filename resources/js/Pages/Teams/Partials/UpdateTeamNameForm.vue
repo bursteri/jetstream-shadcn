@@ -1,6 +1,6 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
-import ActionMessage from '@/Components/ActionMessage.vue';
+import { toast } from 'vue-sonner';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
 import { Label } from '@/Components/ui/label';
@@ -20,6 +20,7 @@ const updateTeamName = () => {
     form.put(route('teams.update', props.team), {
         errorBag: 'updateTeamName',
         preserveScroll: true,
+        onSuccess: () => toast.success('Team name updated successfully.'),
     });
 };
 </script>
@@ -43,8 +44,8 @@ const updateTeamName = () => {
                     <img class="size-12 rounded-full object-cover" :src="team.owner.profile_photo_url" :alt="team.owner.name">
 
                     <div class="ms-4 leading-tight">
-                        <div class="text-gray-900 dark:text-white">{{ team.owner.name }}</div>
-                        <div class="text-gray-700 dark:text-gray-300 text-sm">
+                        <div class="text-zinc-900 dark:text-white">{{ team.owner.name }}</div>
+                        <div class="text-zinc-700 dark:text-zinc-300 text-sm">
                             {{ team.owner.email }}
                         </div>
                     </div>
@@ -68,10 +69,6 @@ const updateTeamName = () => {
         </template>
 
         <template v-if="permissions.canUpdateTeam" #actions>
-            <ActionMessage :on="form.recentlySuccessful" class="me-3">
-                Saved.
-            </ActionMessage>
-
             <Button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                 Save
             </Button>

@@ -70,7 +70,7 @@ const closeModal = () => {
                         </DialogDescription>
                     </DialogHeader>
 
-                    <div class="mt-4">
+                    <div>
                         <Input
                             ref="passwordInput"
                             v-model="form.password"
@@ -86,13 +86,7 @@ const closeModal = () => {
 
                     <DialogFooter>
                         <Button variant="outline" @click="closeModal">Cancel</Button>
-                        <Button
-                            variant="destructive"
-                            class="ms-3"
-                            :class="{ 'opacity-25': form.processing }"
-                            :disabled="form.processing"
-                            @click="deleteUser"
-                        >
+                        <Button variant="destructive" :class="{ 'opacity-25': form.processing }" :disabled="form.processing" @click="deleteUser">
                             Delete Account
                         </Button>
                     </DialogFooter>

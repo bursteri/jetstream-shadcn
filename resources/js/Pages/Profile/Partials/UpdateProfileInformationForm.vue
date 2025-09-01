@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { Link, router, useForm } from '@inertiajs/vue3';
-import ActionMessage from '@/Components/ActionMessage.vue';
+import { toast } from 'vue-sonner';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
 import { Label } from '@/Components/ui/label';
@@ -31,12 +31,16 @@ const updateProfileInformation = () => {
     form.post(route('user-profile-information.update'), {
         errorBag: 'updateProfileInformation',
         preserveScroll: true,
-        onSuccess: () => clearPhotoFileInput(),
+        onSuccess: () => {
+            clearPhotoFileInput();
+            toast.success('Profile updated successfully.');
+        },
     });
 };
 
 const sendEmailVerification = () => {
     verificationLinkSent.value = true;
+    toast.success('Verification email sent.');
 };
 
 const selectNewPhoto = () => {
@@ -63,6 +67,7 @@ const deletePhoto = () => {
         onSuccess: () => {
             photoPreview.value = null;
             clearPhotoFileInput();
+            toast.success('Photo removed successfully.');
         },
     });
 };
@@ -163,7 +168,7 @@ const clearPhotoFileInput = () => {
                             :href="route('verification.send')"
                             method="post"
                             as="button"
-                            class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                            class="underline text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-zinc-800"
                             @click.prevent="sendEmailVerification"
                         >
                             Click here to re-send the verification email.
@@ -178,10 +183,6 @@ const clearPhotoFileInput = () => {
         </template>
 
         <template #actions>
-            <ActionMessage :on="form.recentlySuccessful" class="me-3">
-                Saved.
-            </ActionMessage>
-
             <Button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                 Save
             </Button>

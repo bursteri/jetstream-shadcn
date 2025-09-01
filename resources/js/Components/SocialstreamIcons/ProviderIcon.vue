@@ -19,7 +19,7 @@ defineProps({
 </script>
 
 <template>
-    <div class="text-gray-900 dark:text-gray-100">
+    <div class="text-zinc-900 dark:text-zinc-100">
         <BitbucketIcon v-if="provider.id === 'bitbucket'" :class="classes"/>
         <FacebookIcon v-if="provider.id === 'facebook'" :class="classes"/>
         <GithubIcon v-if="provider.id === 'github'" :class="classes"/>

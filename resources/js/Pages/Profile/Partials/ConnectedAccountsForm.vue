@@ -66,7 +66,7 @@ const closeModal = () => {
                                     <button
                                         v-if="$page.props.jetstream.managesProfilePhotos && getAccountForProvider(provider).avatar_path"
                                         @click="setProfilePhoto(getAccountForProvider(provider).id)"
-                                        class="ms-6 cursor-pointer text-sm text-gray-500 hover:text-gray-700 focus:outline-none"
+                                        class="ms-6 cursor-pointer text-sm text-zinc-500 hover:text-zinc-700 focus:outline-none"
                                     >
                                         Use Avatar as Profile Photo
                                     </button>
@@ -104,7 +104,7 @@ const closeModal = () => {
                         <DialogDescription> Please enter your password to confirm you would like to remove this account. </DialogDescription>
                     </DialogHeader>
 
-                    <div class="mt-4">
+                    <div>
                         <Input
                             ref="passwordInput"
                             v-model="form.password"

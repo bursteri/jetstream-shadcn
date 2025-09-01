@@ -1,7 +1,7 @@
 <script setup>
 import {ref} from 'vue';
 import {useForm} from '@inertiajs/vue3';
-import ActionMessage from '@/Components/ActionMessage.vue';
+import { toast } from 'vue-sonner';
 import { Button } from '@/Components/ui/button';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
@@ -20,7 +20,10 @@ const setPassword = () => {
     form.post(route('user-password.set'), {
         errorBag: 'setPassword',
         preserveScroll: true,
-        onSuccess: () => form.reset(),
+        onSuccess: () => {
+            form.reset();
+            toast.success('Password set successfully.');
+        },
         onError: () => {
             if (form.errors.password) {
                 form.reset('password', 'password_confirmation');
@@ -70,10 +73,6 @@ const setPassword = () => {
         </template>
 
         <template #actions>
-            <ActionMessage :on="form.recentlySuccessful" class="mr-3">
-                Saved.
-            </ActionMessage>
-
             <Button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                 Save
             </Button>

@@ -34,7 +34,7 @@ const deleteTeam = () => {
         </template>
 
         <template #content>
-            <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400">
+            <div class="max-w-xl text-sm text-zinc-600 dark:text-zinc-400">
                 Once a team is deleted, all of its resources and data will be permanently deleted. Before deleting this team, please download any data or information regarding this team that you wish to retain.
             </div>
 
@@ -60,7 +60,6 @@ const deleteTeam = () => {
                         </Button>
                         <Button
                             variant="destructive"
-                            class="ms-3"
                             :class="{ 'opacity-25': form.processing }"
                             :disabled="form.processing"
                             @click="deleteTeam"

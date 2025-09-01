@@ -4,7 +4,9 @@ import AppSidebar from '@/Components/AppSidebar.vue';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/Components/ui/breadcrumb';
 import { Separator } from '@/Components/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/Components/ui/sidebar';
-import Banner from '@/Components/Banner.vue';
+import { Toaster } from 'vue-sonner';
+import 'vue-sonner/style.css'; // vue-sonner v2 requires this import
+import { useFlashMessages } from '@/composables/useFlashMessages';
 
 interface Props {
     title?: string;
@@ -16,19 +18,22 @@ interface Props {
 }
 
 defineProps<Props>();
+
+// Initialize flash message handling
+useFlashMessages();
 </script>
 
 <template>
-    <div class="flex flex-col h-screen">
+    <div class="flex h-screen flex-col">
         <Head :title="title" />
 
-        <Banner />
+        <Toaster position="top-right" />
 
         <SidebarProvider class="flex flex-1 overflow-hidden">
             <AppSidebar />
             <SidebarInset class="flex h-full flex-col overflow-hidden">
                 <header
-                    class="flex h-16 shrink-0 items-center gap-2 border-b border-zinc-900/5 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12"
+                    class="flex h-14 shrink-0 items-center gap-2 border-b border-zinc-900/5 transition-[width,height] ease-linear dark:border-zinc-800"
                 >
                     <div class="flex items-center gap-2 px-4">
                         <SidebarTrigger class="-ml-1" />

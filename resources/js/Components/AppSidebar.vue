@@ -6,7 +6,7 @@ import { usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import NavMain from '@/Components/NavMain.vue';
 import NavUser from '@/Components/NavUser.vue';
-import TeamSwitcher from '@/Components/TeamSwitcher.vue';
+import NavTeam from '@/Components/NavTeam.vue';
 
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from '@/Components/ui/sidebar';
 
@@ -79,7 +79,7 @@ const data = computed(() => {
 <template>
     <Sidebar v-bind="props" variant="inset">
         <SidebarHeader>
-            <TeamSwitcher />
+            <NavTeam />
         </SidebarHeader>
         <SidebarContent>
             <NavMain :items="data.navMain" label="Platform" />
