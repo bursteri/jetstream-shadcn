@@ -16,6 +16,13 @@ const props = withDefaults(defineProps<SidebarProps>(), {
 
 const page = usePage();
 
+// Helper function to check if a route is active
+const isActiveRoute = (routeName: string): boolean => {
+    // Access the current route name from Ziggy
+    const currentRouteName = (window as any).route().current();
+    return currentRouteName === routeName || currentRouteName?.startsWith(routeName + '.');
+};
+
 // Use computed to make it reactive
 const data = computed(() => {
     const userData = (page.props as any)?.auth?.user || {
@@ -30,6 +37,7 @@ const data = computed(() => {
         {
             title: 'General',
             url: route('profile.show'),
+            isActive: isActiveRoute('profile.show'),
         },
     ];
 
@@ -38,12 +46,14 @@ const data = computed(() => {
         settingsItems.push({
             title: 'Team',
             url: route('teams.show', { team: currentTeamId }),
+            isActive: isActiveRoute('teams.show'),
         });
     }
 
     settingsItems.push({
         title: 'Billing',
         url: '#',
+        isActive: false,
     });
 
     return {
@@ -57,12 +67,15 @@ const data = computed(() => {
                 title: 'Dashboard',
                 url: route('dashboard'),
                 icon: LayoutGrid,
+                isActive: isActiveRoute('dashboard'),
             },
             {
                 title: 'Settings',
                 url: '#',
                 icon: Settings2,
                 items: settingsItems,
+                // Parent should not have active state when it has sub-items
+                isActive: false,
             },
         ],
         projects: [
@@ -70,6 +83,7 @@ const data = computed(() => {
                 name: 'API',
                 url: route('api-tokens.index'),
                 icon: CodeXml,
+                isActive: isActiveRoute('api-tokens.index'),
             },
         ],
     };

@@ -54,7 +54,7 @@ const switchToTeam = (team: any) => {
                     :side="isMobile ? 'bottom' : 'right'"
                     :side-offset="4"
                 >
-                    <DropdownMenuLabel class="text-muted-foreground text-xs">Teams</DropdownMenuLabel>
+                    <DropdownMenuLabel class="text-muted-foreground text-xs -mb-1">Teams</DropdownMenuLabel>
                     <template v-if="($page.props.auth?.user?.all_teams?.length ?? 0) > 1">
                         <DropdownMenuItem
                             v-for="team in $page.props.auth.user.all_teams"

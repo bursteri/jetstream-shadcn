@@ -381,7 +381,7 @@ const displayableRole = (role) => {
 
         <!-- Remove Team Member Confirmation Modal -->
         <Dialog
-            :open="teamMemberBeingRemoved"
+            :open="!!teamMemberBeingRemoved"
             @update:open="
                 (val) => {
                     if (!val) teamMemberBeingRemoved = null;
