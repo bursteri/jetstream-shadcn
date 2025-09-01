@@ -5,7 +5,7 @@ import ActionSection from '@/Components/ActionSection.vue';
 import { Button } from '@/Components/ui/button';
 import DialogModal from '@/Components/DialogModal.vue';
 import InputError from '@/Components/InputError.vue';
-import TextInput from '@/Components/TextInput.vue';
+import { Input } from '@/Components/ui/input';
 
 const confirmingUserDeletion = ref(false);
 const passwordInput = ref(null);
@@ -67,7 +67,7 @@ const closeModal = () => {
                     Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.
 
                     <div class="mt-4">
-                        <TextInput
+                        <Input
                             ref="passwordInput"
                             v-model="form.password"
                             type="password"

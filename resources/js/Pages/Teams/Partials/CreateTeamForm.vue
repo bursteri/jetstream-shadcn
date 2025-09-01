@@ -4,7 +4,7 @@ import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import { Button } from '@/Components/ui/button';
-import TextInput from '@/Components/TextInput.vue';
+import { Input } from '@/Components/ui/input';
 
 const form = useForm({
     name: '',
@@ -46,7 +46,7 @@ const createTeam = () => {
 
             <div class="col-span-6 sm:col-span-4">
                 <InputLabel for="name" value="Team Name" />
-                <TextInput
+                <Input
                     id="name"
                     v-model="form.name"
                     type="text"

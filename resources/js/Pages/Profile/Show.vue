@@ -1,5 +1,5 @@
 <script setup>
-import AppLayout from '@/Layouts/AppLayout.vue';
+import SidebarLayout from '@/Layouts/SidebarLayout.vue';
 import ConnectedAccountsForm from '@/Pages/Profile/Partials/ConnectedAccountsForm.vue';
 import DeleteUserForm from '@/Pages/Profile/Partials/DeleteUserForm.vue';
 import LogoutOtherBrowserSessionsForm from '@/Pages/Profile/Partials/LogoutOtherBrowserSessionsForm.vue';
@@ -16,14 +16,14 @@ defineProps({
 </script>
 
 <template>
-    <AppLayout title="Profile">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Profile
-            </h2>
-        </template>
-
-        <div>
+    <SidebarLayout 
+        title="Profile"
+        :breadcrumbs="[
+            { label: 'Account', href: '#' },
+            { label: 'Profile', current: true }
+        ]"
+    >
+        <div class="p-4">
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
                 <div v-if="$page.props.jetstream.canUpdateProfileInformation">
                     <UpdateProfileInformationForm :user="$page.props.auth.user"/>
@@ -69,5 +69,5 @@ defineProps({
                 </template>
             </div>
         </div>
-    </AppLayout>
+    </SidebarLayout>
 </template>

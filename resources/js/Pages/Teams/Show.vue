@@ -1,5 +1,5 @@
 <script setup>
-import AppLayout from '@/Layouts/AppLayout.vue';
+import SidebarLayout from '@/Layouts/SidebarLayout.vue';
 import DeleteTeamForm from '@/Pages/Teams/Partials/DeleteTeamForm.vue';
 import SectionBorder from '@/Components/SectionBorder.vue';
 import TeamMemberManager from '@/Pages/Teams/Partials/TeamMemberManager.vue';
@@ -13,15 +13,16 @@ defineProps({
 </script>
 
 <template>
-    <AppLayout title="Team Settings">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                Team Settings
-            </h2>
-        </template>
-
-        <div>
-            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+    <SidebarLayout 
+        title="Team Settings"
+        :breadcrumbs="[
+            { label: 'Teams', href: '#' },
+            { label: team.name, href: '#' },
+            { label: 'Settings', current: true }
+        ]"
+    >
+        <div class="p-4">
+            <div class="max-w-7xl mx-auto">
                 <UpdateTeamNameForm :team="team" :permissions="permissions" />
 
                 <TeamMemberManager
@@ -38,5 +39,5 @@ defineProps({
                 </template>
             </div>
         </div>
-    </AppLayout>
+    </SidebarLayout>
 </template>

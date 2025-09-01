@@ -7,7 +7,7 @@ import ConnectedAccount from '@/Components/ConnectedAccount.vue';
 import { Button } from '@/Components/ui/button';
 import DialogModal from '@/Components/DialogModal.vue';
 import InputError from '@/Components/InputError.vue';
-import TextInput from '@/Components/TextInput.vue';
+import { Input } from '@/Components/ui/input';
 
 const accountId = ref(null);
 const confirmingRemoveAccount = ref(false);
@@ -112,7 +112,7 @@ const closeModal = () => {
                     Please enter your password to confirm you would like to remove this account.
 
                     <div class="mt-4">
-                        <TextInput
+                        <Input
                             ref="passwordInput"
                             v-model="form.password"
                             type="password"

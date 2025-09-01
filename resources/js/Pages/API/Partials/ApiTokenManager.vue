@@ -11,7 +11,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import { Button } from '@/Components/ui/button';
 import SectionBorder from '@/Components/SectionBorder.vue';
-import TextInput from '@/Components/TextInput.vue';
+import { Input } from '@/Components/ui/input';
 
 const props = defineProps({
     tokens: Array,
@@ -86,7 +86,7 @@ const deleteApiToken = () => {
                 <!-- Token Name -->
                 <div class="col-span-6 sm:col-span-4">
                     <InputLabel for="name" value="Name" />
-                    <TextInput
+                    <Input
                         id="name"
                         v-model="createApiTokenForm.name"
                         type="text"

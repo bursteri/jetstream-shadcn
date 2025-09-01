@@ -10,7 +10,7 @@ import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import SectionBorder from '@/Components/SectionBorder.vue';
-import TextInput from '@/Components/TextInput.vue';
+import { Input } from '@/Components/ui/input';
 
 const props = defineProps({
     team: Object,
@@ -115,7 +115,7 @@ const displayableRole = (role) => {
                     <!-- Member Email -->
                     <div class="col-span-6 sm:col-span-4">
                         <InputLabel for="email" value="Email" />
-                        <TextInput
+                        <Input
                             id="email"
                             v-model="addTeamMemberForm.email"
                             type="email"

@@ -6,7 +6,7 @@ import { Button } from '@/Components/ui/button';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import TextInput from '@/Components/TextInput.vue';
+import { Input } from '@/Components/ui/input';
 
 const passwordInput = ref(null);
 
@@ -45,7 +45,7 @@ const setPassword = () => {
         <template #form>
             <div class="col-span-6 sm:col-span-4">
                 <InputLabel for="password" value="New Password"/>
-                <TextInput
+                <Input
                     id="password"
                     ref="passwordInput"
                     v-model="form.password"
@@ -58,7 +58,7 @@ const setPassword = () => {
 
             <div class="col-span-6 sm:col-span-4">
                 <InputLabel for="password_confirmation" value="Confirm Password"/>
-                <TextInput
+                <Input
                     id="password_confirmation"
                     v-model="form.password_confirmation"
                     autocomplete="new-password"
