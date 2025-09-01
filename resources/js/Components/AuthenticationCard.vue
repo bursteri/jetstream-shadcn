@@ -29,5 +29,6 @@ const props = defineProps<{
                 <slot />
             </CardContent>
         </Card>
+        <slot name="footer" />
     </div>
 </template>
