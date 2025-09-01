@@ -33,7 +33,7 @@ const form = reactive({
 const passwordInput = ref(null);
 
 const startConfirmingPassword = () => {
-    axios.get(route('password.confirmation')).then(response => {
+    axios.get(route('password.confirmation')).then((response) => {
         if (response.data.confirmed) {
             emit('confirmed');
         } else {
@@ -47,19 +47,21 @@ const startConfirmingPassword = () => {
 const confirmPassword = () => {
     form.processing = true;
 
-    axios.post(route('password.confirm'), {
-        password: form.password,
-    }).then(() => {
-        form.processing = false;
+    axios
+        .post(route('password.confirm'), {
+            password: form.password,
+        })
+        .then(() => {
+            form.processing = false;
 
-        closeModal();
-        nextTick().then(() => emit('confirmed'));
-
-    }).catch(error => {
-        form.processing = false;
-        form.error = error.response.data.errors.password[0];
-        passwordInput.value.focus();
-    });
+            closeModal();
+            nextTick().then(() => emit('confirmed'));
+        })
+        .catch((error) => {
+            form.processing = false;
+            form.error = error.response.data.errors.password[0];
+            passwordInput.value.focus();
+        });
 };
 
 const closeModal = () => {
@@ -75,7 +77,14 @@ const closeModal = () => {
             <slot />
         </span>
 
-        <Dialog :open="confirmingPassword" @update:open="(val) => { if (!val) closeModal() }">
+        <Dialog
+            :open="confirmingPassword"
+            @update:open="
+                (val) => {
+                    if (!val) closeModal();
+                }
+            "
+        >
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>{{ title }}</DialogTitle>
@@ -97,15 +106,8 @@ const closeModal = () => {
                 </div>
 
                 <DialogFooter>
-                    <Button variant="outline" @click="closeModal">
-                        Cancel
-                    </Button>
-                    <Button
-                        class="ms-3"
-                        :class="{ 'opacity-25': form.processing }"
-                        :disabled="form.processing"
-                        @click="confirmPassword"
-                    >
+                    <Button variant="outline" @click="closeModal"> Cancel </Button>
+                    <Button class="ms-3" :class="{ 'opacity-25': form.processing }" :disabled="form.processing" @click="confirmPassword">
                         {{ button }}
                     </Button>
                 </DialogFooter>

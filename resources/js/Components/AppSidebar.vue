@@ -23,16 +23,16 @@ const data = computed(() => {
         email: 'user@example.com',
         profile_photo_url: null,
     };
-    
+
     const currentTeamId = (page.props as any)?.auth?.user?.current_team?.id;
-    
+
     const settingsItems = [
         {
             title: 'General',
             url: route('profile.show'),
         },
     ];
-    
+
     // Only add Team link if current_team.id exists
     if (currentTeamId) {
         settingsItems.push({
@@ -40,12 +40,12 @@ const data = computed(() => {
             url: route('teams.show', { team: currentTeamId }),
         });
     }
-    
+
     settingsItems.push({
         title: 'Billing',
         url: '#',
     });
-    
+
     return {
         user: {
             name: userData.name,

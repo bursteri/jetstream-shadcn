@@ -19,21 +19,21 @@ defineProps<Props>();
 </script>
 
 <template>
-    <div>
+    <div class="flex flex-col h-screen">
         <Head :title="title" />
-        
+
         <Banner />
-        
-        <SidebarProvider class="flex h-screen overflow-hidden">
+
+        <SidebarProvider class="flex flex-1 overflow-hidden">
             <AppSidebar />
-            <SidebarInset class="flex flex-col h-screen overflow-hidden">
+            <SidebarInset class="flex h-full flex-col overflow-hidden">
                 <header
                     class="flex h-16 shrink-0 items-center gap-2 border-b border-zinc-900/5 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12"
                 >
                     <div class="flex items-center gap-2 px-4">
                         <SidebarTrigger class="-ml-1" />
                         <Separator orientation="vertical" class="mr-2 h-4" />
-                        
+
                         <!-- Breadcrumbs -->
                         <Breadcrumb v-if="breadcrumbs && breadcrumbs.length > 0">
                             <BreadcrumbList>
@@ -50,19 +50,19 @@ defineProps<Props>();
                                 </template>
                             </BreadcrumbList>
                         </Breadcrumb>
-                        
+
                         <!-- Default slot for custom header content -->
                         <slot name="header-actions" />
                     </div>
                 </header>
-                
+
                 <!-- Page Header (optional) -->
-                <div v-if="$slots.header" class="border-b border-zinc-900/5 bg-white shrink-0">
+                <div v-if="$slots.header" class="shrink-0 border-b border-zinc-900/5 bg-white">
                     <div class="px-4 py-6">
                         <slot name="header" />
                     </div>
                 </div>
-                
+
                 <!-- Page Content - Scrollable Container -->
                 <div class="flex-1 overflow-auto">
                     <slot />

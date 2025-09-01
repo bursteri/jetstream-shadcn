@@ -1,7 +1,6 @@
 <script setup>
-import {ref} from 'vue';
-import {useForm, usePage} from '@inertiajs/vue3';
-import ActionLink from '@/Components/ActionLink.vue';
+import { ref } from 'vue';
+import { useForm, usePage } from '@inertiajs/vue3';
 import ActionSection from '@/Components/ActionSection.vue';
 import ConnectedAccount from '@/Components/ConnectedAccount.vue';
 import { Button } from '@/Components/ui/button';
@@ -13,20 +12,17 @@ const accountId = ref(null);
 const confirmingRemoveAccount = ref(false);
 const passwordInput = ref(null);
 
-const page= usePage();
+const page = usePage();
 
 const form = useForm({
     password: '',
 });
 
-const getAccountForProvider = (provider) => page.props.socialstream.connectedAccounts
-    .filter(account => account.provider === provider.id)
-    .shift();
-
+const getAccountForProvider = (provider) => page.props.socialstream.connectedAccounts.filter((account) => account.provider === provider.id).shift();
 
 const setProfilePhoto = (id) => {
     form.put(route('user-profile-photo.set', { id }), {
-        preserveScroll: true
+        preserveScroll: true,
     });
 };
 
@@ -52,50 +48,41 @@ const closeModal = () => {
 
     form.reset();
 };
-
 </script>
 
 <template>
     <ActionSection>
-        <template #title>
-            Connected Accounts
-        </template>
+        <template #title> Connected Accounts </template>
 
-        <template #description>
-           Connect your social media accounts to enable Sign In with OAuth.
-        </template>
+        <template #description> Connect your social media accounts to enable Sign In with OAuth. </template>
 
         <template #content>
-           <div class="p-4 bg-red-500/10 dark:bg-red-500/5 text-red-500 border-l-4 border-red-600 dark:border-red-700 rounded font-medium text-sm">
-              If you feel any of your connected accounts have been compromised, you should disconnect them
-              immediately and change your password.
-           </div>
-
-            <div class="space-y-6 mt-6">
-                <div v-for="(provider) in $page.props.socialstream.providers" :key="provider">
-                    <ConnectedAccount :provider="provider"
-                                      :created-at="getAccountForProvider(provider)?.created_at">
+            <div class="space-y-6">
+                <div v-for="provider in $page.props.socialstream.providers" :key="provider">
+                    <ConnectedAccount :provider="provider" :created-at="getAccountForProvider(provider)?.created_at">
                         <template #action>
                             <template v-if="getAccountForProvider(provider)">
                                 <div class="flex items-center space-x-6">
                                     <button
                                         v-if="$page.props.jetstream.managesProfilePhotos && getAccountForProvider(provider).avatar_path"
                                         @click="setProfilePhoto(getAccountForProvider(provider).id)"
-                                        class="cursor-pointer ms-6 text-sm text-gray-500 hover:text-gray-700 focus:outline-none">
+                                        class="ms-6 cursor-pointer text-sm text-gray-500 hover:text-gray-700 focus:outline-none"
+                                    >
                                         Use Avatar as Profile Photo
                                     </button>
 
-                                    <Button variant="destructive" @click="confirmRemoveAccount(getAccountForProvider(provider).id)"
-                                                  v-if="$page.props.socialstream.connectedAccounts.length > 1 || $page.props.socialstream.hasPassword">
+                                    <Button
+                                        variant="destructive"
+                                        @click="confirmRemoveAccount(getAccountForProvider(provider).id)"
+                                        v-if="$page.props.socialstream.connectedAccounts.length > 1 || $page.props.socialstream.hasPassword"
+                                    >
                                         Remove
                                     </Button>
                                 </div>
                             </template>
 
                             <template v-else>
-                                <ActionLink :href="route('oauth.redirect', { provider })">
-                                    Connect
-                                </ActionLink>
+                                <Button variant="outline" @click="window.location.href = route('oauth.redirect', { provider })"> Connect </Button>
                             </template>
                         </template>
                     </ConnectedAccount>
@@ -103,13 +90,18 @@ const closeModal = () => {
             </div>
 
             <!-- Confirmation Modal -->
-            <Dialog :open="confirmingRemoveAccount" @update:open="(val) => { if (!val) closeModal() }">
+            <Dialog
+                :open="confirmingRemoveAccount"
+                @update:open="
+                    (val) => {
+                        if (!val) closeModal();
+                    }
+                "
+            >
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>Are you sure you want to remove this account?</DialogTitle>
-                        <DialogDescription>
-                            Please enter your password to confirm you would like to remove this account.
-                        </DialogDescription>
+                        <DialogDescription> Please enter your password to confirm you would like to remove this account. </DialogDescription>
                     </DialogHeader>
 
                     <div class="mt-4">
@@ -127,11 +119,8 @@ const closeModal = () => {
                     </div>
 
                     <DialogFooter>
-                        <Button variant="outline" @click="closeModal">
-                            Cancel
-                        </Button>
-                        <Button class="ml-2" @click="removeAccount"
-                                       :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                        <Button variant="outline" @click="closeModal"> Cancel </Button>
+                        <Button class="ml-2" @click="removeAccount" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                             Remove Account
                         </Button>
                     </DialogFooter>

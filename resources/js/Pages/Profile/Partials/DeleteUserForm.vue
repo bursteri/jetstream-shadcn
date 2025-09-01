@@ -43,7 +43,7 @@ const closeModal = () => {
         <template #description> Permanently delete your account. </template>
 
         <template #content>
-            <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400">
+            <div class="max-w-xl text-sm text-zinc-600 dark:text-zinc-400">
                 Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download
                 any data or information that you wish to retain.
             </div>
@@ -53,13 +53,20 @@ const closeModal = () => {
             </div>
 
             <!-- Delete Account Confirmation Modal -->
-            <Dialog :open="confirmingUserDeletion" @update:open="(val) => { if (!val) closeModal() }">
+            <Dialog
+                :open="confirmingUserDeletion"
+                @update:open="
+                    (val) => {
+                        if (!val) closeModal();
+                    }
+                "
+            >
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>Delete Account</DialogTitle>
                         <DialogDescription>
-                            Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently
-                            deleted. Please enter your password to confirm you would like to permanently delete your account.
+                            Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be
+                            permanently deleted. Please enter your password to confirm you would like to permanently delete your account.
                         </DialogDescription>
                     </DialogHeader>
 

@@ -127,4 +127,34 @@
     body {
         @apply bg-background text-foreground;
     }
+    
+    /* Custom scrollbar styles */
+    ::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        @apply bg-transparent;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        @apply bg-zinc-300 dark:bg-zinc-700 rounded-md;
+        border: 3px solid transparent;
+        background-clip: content-box;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        @apply bg-zinc-400 dark:bg-zinc-600;
+    }
+    
+    /* Firefox scrollbar styles */
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: theme('colors.zinc.300') transparent;
+    }
+    
+    .dark * {
+        scrollbar-color: theme('colors.zinc.700') transparent;
+    }
 }
