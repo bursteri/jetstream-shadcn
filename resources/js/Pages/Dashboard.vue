@@ -10,7 +10,7 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/Components/ui/s
         <AppSidebar />
         <SidebarInset>
             <header
-                class="flex h-16 border-b border-zinc-900/5 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12"
+                class="flex h-16 shrink-0 items-center gap-2 border-b border-zinc-900/5 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12"
             >
                 <div class="flex items-center gap-2 px-4">
                     <SidebarTrigger class="-ml-1" />
@@ -30,11 +30,11 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/Components/ui/s
             </header>
             <div class="flex flex-1 flex-col gap-4 p-4">
                 <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-                    <div class="bg-zinc-50 aspect-video rounded-xl border border-zinc-900/5" />
-                    <div class="bg-zinc-50 aspect-video rounded-xl border border-zinc-900/5" />
-                    <div class="bg-zinc-50 aspect-video rounded-xl border border-zinc-900/5" />
+                    <div class="aspect-video rounded-xl border border-zinc-900/5 bg-zinc-50" />
+                    <div class="aspect-video rounded-xl border border-zinc-900/5 bg-zinc-50" />
+                    <div class="aspect-video rounded-xl border border-zinc-900/5 bg-zinc-50" />
                 </div>
-                <div class="bg-zinc-50 min-h-[100vh] flex-1 rounded-xl border border-zinc-900/5 md:min-h-min" />
+                <div class="min-h-[100vh] flex-1 rounded-xl border border-zinc-900/5 bg-zinc-50 md:min-h-min" />
             </div>
         </SidebarInset>
     </SidebarProvider>

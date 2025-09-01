@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { SidebarProps } from '@/Components/ui/sidebar';
 
-import { AudioWaveform, BookOpen, Bot, Command, Frame, GalleryVerticalEnd, Map, PieChart, Settings2, SquareTerminal } from 'lucide-vue-next';
+import { LayoutGrid, CodeXml, Settings2 } from 'lucide-vue-next';
+import { usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 import NavMain from '@/Components/NavMain.vue';
-import NavProjects from '@/Components/NavProjects.vue';
 import NavUser from '@/Components/NavUser.vue';
 import TeamSwitcher from '@/Components/TeamSwitcher.vue';
 
@@ -13,148 +14,78 @@ const props = withDefaults(defineProps<SidebarProps>(), {
     collapsible: 'icon',
 });
 
-// This is sample data.
-const data = {
-    user: {
-        name: 'shadcn',
-        email: 'm@example.com',
-        avatar: '/avatars/shadcn.jpg',
-    },
-    teams: [
+const page = usePage();
+
+// Use computed to make it reactive
+const data = computed(() => {
+    const userData = (page.props as any)?.auth?.user || {
+        name: 'User',
+        email: 'user@example.com',
+        profile_photo_url: null,
+    };
+    
+    const currentTeamId = (page.props as any)?.auth?.user?.current_team?.id;
+    
+    const settingsItems = [
         {
-            name: 'Acme Inc',
-            logo: GalleryVerticalEnd,
-            plan: 'Enterprise',
+            title: 'General',
+            url: route('profile.show'),
         },
-        {
-            name: 'Acme Corp.',
-            logo: AudioWaveform,
-            plan: 'Startup',
+    ];
+    
+    // Only add Team link if current_team.id exists
+    if (currentTeamId) {
+        settingsItems.push({
+            title: 'Team',
+            url: route('teams.show', { team: currentTeamId }),
+        });
+    }
+    
+    settingsItems.push({
+        title: 'Billing',
+        url: '#',
+    });
+    
+    return {
+        user: {
+            name: userData.name,
+            email: userData.email,
+            avatar: userData.profile_photo_url || null,
         },
-        {
-            name: 'Evil Corp.',
-            logo: Command,
-            plan: 'Free',
-        },
-    ],
-    navMain: [
-        {
-            title: 'Playground',
-            url: '#',
-            icon: SquareTerminal,
-            isActive: true,
-            items: [
-                {
-                    title: 'History',
-                    url: '#',
-                },
-                {
-                    title: 'Starred',
-                    url: '#',
-                },
-                {
-                    title: 'Settings',
-                    url: '#',
-                },
-            ],
-        },
-        {
-            title: 'Models',
-            url: '#',
-            icon: Bot,
-            items: [
-                {
-                    title: 'Genesis',
-                    url: '#',
-                },
-                {
-                    title: 'Explorer',
-                    url: '#',
-                },
-                {
-                    title: 'Quantum',
-                    url: '#',
-                },
-            ],
-        },
-        {
-            title: 'Documentation',
-            url: '#',
-            icon: BookOpen,
-            items: [
-                {
-                    title: 'Introduction',
-                    url: '#',
-                },
-                {
-                    title: 'Get Started',
-                    url: '#',
-                },
-                {
-                    title: 'Tutorials',
-                    url: '#',
-                },
-                {
-                    title: 'Changelog',
-                    url: '#',
-                },
-            ],
-        },
-        {
-            title: 'Settings',
-            url: '#',
-            icon: Settings2,
-            items: [
-                {
-                    title: 'General',
-                    url: '#',
-                },
-                {
-                    title: 'Team',
-                    url: '#',
-                },
-                {
-                    title: 'Billing',
-                    url: '#',
-                },
-                {
-                    title: 'Limits',
-                    url: '#',
-                },
-            ],
-        },
-    ],
-    projects: [
-        {
-            name: 'Design Engineering',
-            url: '#',
-            icon: Frame,
-        },
-        {
-            name: 'Sales & Marketing',
-            url: '#',
-            icon: PieChart,
-        },
-        {
-            name: 'Travel',
-            url: '#',
-            icon: Map,
-        },
-    ],
-};
+        navMain: [
+            {
+                title: 'Dashboard',
+                url: route('dashboard'),
+                icon: LayoutGrid,
+            },
+            {
+                title: 'Settings',
+                url: '#',
+                icon: Settings2,
+                items: settingsItems,
+            },
+        ],
+        projects: [
+            {
+                name: 'API',
+                url: route('api-tokens.index'),
+                icon: CodeXml,
+            },
+        ],
+    };
+});
 </script>
 
 <template>
     <Sidebar v-bind="props" variant="inset">
         <SidebarHeader>
-            <TeamSwitcher :teams="data.teams" />
+            <TeamSwitcher />
         </SidebarHeader>
         <SidebarContent>
-            <NavMain :items="data.navMain" />
-            <NavProjects :projects="data.projects" />
+            <NavMain :items="data.navMain" label="Platform" />
+            <NavMain v-if="$page.props.jetstream?.hasApiFeatures" :items="data.projects" />
         </SidebarContent>
         <SidebarFooter>
-            <NavProjects :projects="data.projects" />
             <NavUser :user="data.user" />
         </SidebarFooter>
         <SidebarRail />
