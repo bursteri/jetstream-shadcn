@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import ActionMessage from '@/Components/ActionMessage.vue';
 import ActionSection from '@/Components/ActionSection.vue';
-import DialogModal from '@/Components/DialogModal.vue';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/Components/ui/dialog';
 import InputError from '@/Components/InputError.vue';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
@@ -97,13 +97,14 @@ const closeModal = () => {
             </div>
 
             <!-- Log Out Other Devices Confirmation Modal -->
-            <DialogModal :show="confirmingLogout" @close="closeModal">
-                <template #title>
-                    Log Out Other Browser Sessions
-                </template>
-
-                <template #content>
-                    Please enter your password to confirm you would like to log out of your other browser sessions across all of your devices.
+            <Dialog :open="confirmingLogout" @update:open="(val) => { if (!val) closeModal() }">
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Log Out Other Browser Sessions</DialogTitle>
+                        <DialogDescription>
+                            Please enter your password to confirm you would like to log out of your other browser sessions across all of your devices.
+                        </DialogDescription>
+                    </DialogHeader>
 
                     <div class="mt-4">
                         <Input
@@ -118,23 +119,22 @@ const closeModal = () => {
 
                         <InputError :message="form.errors.password" class="mt-2" />
                     </div>
-                </template>
 
-                <template #footer>
-                    <Button variant="outline" @click="closeModal">
-                        Cancel
-                    </Button>
-
-                    <Button
-                        class="ms-3"
-                        :class="{ 'opacity-25': form.processing }"
-                        :disabled="form.processing"
-                        @click="logoutOtherBrowserSessions"
-                    >
-                        Log Out Other Browser Sessions
-                    </Button>
-                </template>
-            </DialogModal>
+                    <DialogFooter>
+                        <Button variant="outline" @click="closeModal">
+                            Cancel
+                        </Button>
+                        <Button
+                            class="ms-3"
+                            :class="{ 'opacity-25': form.processing }"
+                            :disabled="form.processing"
+                            @click="logoutOtherBrowserSessions"
+                        >
+                            Log Out Other Browser Sessions
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </template>
     </ActionSection>
 </template>

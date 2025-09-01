@@ -3,12 +3,11 @@ import { ref } from 'vue';
 import { router, useForm, usePage } from '@inertiajs/vue3';
 import ActionMessage from '@/Components/ActionMessage.vue';
 import ActionSection from '@/Components/ActionSection.vue';
-import ConfirmationModal from '@/Components/ConfirmationModal.vue';
 import { Button } from '@/Components/ui/button';
-import DialogModal from '@/Components/DialogModal.vue';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/Components/ui/dialog';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
+import { Label } from '@/Components/ui/label';
 import SectionBorder from '@/Components/SectionBorder.vue';
 import { Input } from '@/Components/ui/input';
 
@@ -114,7 +113,7 @@ const displayableRole = (role) => {
 
                     <!-- Member Email -->
                     <div class="col-span-6 sm:col-span-4">
-                        <InputLabel for="email" value="Email" />
+                        <Label for="email">Email</Label>
                         <Input
                             id="email"
                             v-model="addTeamMemberForm.email"
@@ -126,7 +125,7 @@ const displayableRole = (role) => {
 
                     <!-- Role -->
                     <div v-if="availableRoles.length > 0" class="col-span-6 lg:col-span-4">
-                        <InputLabel for="roles" value="Role" />
+                        <Label for="roles">Role</Label>
                         <InputError :message="addTeamMemberForm.errors.role" class="mt-2" />
 
                         <div class="relative z-0 mt-1 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer">
@@ -272,12 +271,12 @@ const displayableRole = (role) => {
         </div>
 
         <!-- Role Management Modal -->
-        <DialogModal :show="currentlyManagingRole" @close="currentlyManagingRole = false">
-            <template #title>
-                Manage Role
-            </template>
+        <Dialog :open="currentlyManagingRole" @update:open="(val) => { if (!val) currentlyManagingRole = false }">
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Manage Role</DialogTitle>
+                </DialogHeader>
 
-            <template #content>
                 <div v-if="managingRoleFor">
                     <div class="relative z-0 mt-1 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer">
                         <button
@@ -308,76 +307,75 @@ const displayableRole = (role) => {
                         </button>
                     </div>
                 </div>
-            </template>
 
-            <template #footer>
-                <Button variant="outline" @click="currentlyManagingRole = false">
-                    Cancel
-                </Button>
-
-                <Button
-                    class="ms-3"
-                    :class="{ 'opacity-25': updateRoleForm.processing }"
-                    :disabled="updateRoleForm.processing"
-                    @click="updateRole"
-                >
-                    Save
-                </Button>
-            </template>
-        </DialogModal>
+                <DialogFooter>
+                    <Button variant="outline" @click="currentlyManagingRole = false">
+                        Cancel
+                    </Button>
+                    <Button
+                        class="ms-3"
+                        :class="{ 'opacity-25': updateRoleForm.processing }"
+                        :disabled="updateRoleForm.processing"
+                        @click="updateRole"
+                    >
+                        Save
+                    </Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
 
         <!-- Leave Team Confirmation Modal -->
-        <ConfirmationModal :show="confirmingLeavingTeam" @close="confirmingLeavingTeam = false">
-            <template #title>
-                Leave Team
-            </template>
+        <Dialog :open="confirmingLeavingTeam" @update:open="(val) => { if (!val) confirmingLeavingTeam = false }">
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Leave Team</DialogTitle>
+                    <DialogDescription>
+                        Are you sure you would like to leave this team?
+                    </DialogDescription>
+                </DialogHeader>
 
-            <template #content>
-                Are you sure you would like to leave this team?
-            </template>
-
-            <template #footer>
-                <Button variant="outline" @click="confirmingLeavingTeam = false">
-                    Cancel
-                </Button>
-
-                <Button
-                    variant="destructive"
-                    class="ms-3"
-                    :class="{ 'opacity-25': leaveTeamForm.processing }"
-                    :disabled="leaveTeamForm.processing"
-                    @click="leaveTeam"
-                >
-                    Leave
-                </Button>
-            </template>
-        </ConfirmationModal>
+                <DialogFooter>
+                    <Button variant="outline" @click="confirmingLeavingTeam = false">
+                        Cancel
+                    </Button>
+                    <Button
+                        variant="destructive"
+                        class="ms-3"
+                        :class="{ 'opacity-25': leaveTeamForm.processing }"
+                        :disabled="leaveTeamForm.processing"
+                        @click="leaveTeam"
+                    >
+                        Leave
+                    </Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
 
         <!-- Remove Team Member Confirmation Modal -->
-        <ConfirmationModal :show="teamMemberBeingRemoved" @close="teamMemberBeingRemoved = null">
-            <template #title>
-                Remove Team Member
-            </template>
+        <Dialog :open="teamMemberBeingRemoved" @update:open="(val) => { if (!val) teamMemberBeingRemoved = null }">
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Remove Team Member</DialogTitle>
+                    <DialogDescription>
+                        Are you sure you would like to remove this person from the team?
+                    </DialogDescription>
+                </DialogHeader>
 
-            <template #content>
-                Are you sure you would like to remove this person from the team?
-            </template>
-
-            <template #footer>
-                <Button variant="outline" @click="teamMemberBeingRemoved = null">
-                    Cancel
-                </Button>
-
-                <Button
-                    variant="destructive"
-                    class="ms-3"
-                    :class="{ 'opacity-25': removeTeamMemberForm.processing }"
-                    :disabled="removeTeamMemberForm.processing"
-                    @click="removeTeamMember"
-                >
-                    Remove
-                </Button>
-            </template>
-        </ConfirmationModal>
+                <DialogFooter>
+                    <Button variant="outline" @click="teamMemberBeingRemoved = null">
+                        Cancel
+                    </Button>
+                    <Button
+                        variant="destructive"
+                        class="ms-3"
+                        :class="{ 'opacity-25': removeTeamMemberForm.processing }"
+                        :disabled="removeTeamMemberForm.processing"
+                        @click="removeTeamMember"
+                    >
+                        Remove
+                    </Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
     </div>
 </template>

@@ -3,12 +3,11 @@ import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import ActionMessage from '@/Components/ActionMessage.vue';
 import ActionSection from '@/Components/ActionSection.vue';
-import Checkbox from '@/Components/Checkbox.vue';
-import ConfirmationModal from '@/Components/ConfirmationModal.vue';
-import DialogModal from '@/Components/DialogModal.vue';
+import { Checkbox } from '@/Components/ui/checkbox';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/Components/ui/dialog';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
+import { Label } from '@/Components/ui/label';
 import { Button } from '@/Components/ui/button';
 import SectionBorder from '@/Components/SectionBorder.vue';
 import { Input } from '@/Components/ui/input';
@@ -85,7 +84,7 @@ const deleteApiToken = () => {
             <template #form>
                 <!-- Token Name -->
                 <div class="col-span-6 sm:col-span-4">
-                    <InputLabel for="name" value="Name" />
+                    <Label for="name">Name</Label>
                     <Input
                         id="name"
                         v-model="createApiTokenForm.name"
@@ -98,7 +97,7 @@ const deleteApiToken = () => {
 
                 <!-- Token Permissions -->
                 <div v-if="availablePermissions.length > 0" class="col-span-6">
-                    <InputLabel for="permissions" value="Permissions" />
+                    <Label for="permissions">Permissions</Label>
 
                     <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div v-for="permission in availablePermissions" :key="permission">
@@ -169,35 +168,34 @@ const deleteApiToken = () => {
         </div>
 
         <!-- Token Value Modal -->
-        <DialogModal :show="displayingToken" @close="displayingToken = false">
-            <template #title>
-                API Token
-            </template>
-
-            <template #content>
-                <div>
-                    Please copy your new API token. For your security, it won't be shown again.
-                </div>
+        <Dialog :open="displayingToken" @update:open="(val) => { if (!val) displayingToken = false }">
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>API Token</DialogTitle>
+                    <DialogDescription>
+                        Please copy your new API token. For your security, it won't be shown again.
+                    </DialogDescription>
+                </DialogHeader>
 
                 <div v-if="$page.props.jetstream.flash.token" class="mt-4 bg-gray-100 dark:bg-gray-900 px-4 py-2 rounded font-mono text-sm text-gray-500 break-all">
                     {{ $page.props.jetstream.flash.token }}
                 </div>
-            </template>
 
-            <template #footer>
-                <Button variant="outline" @click="displayingToken = false">
-                    Close
-                </Button>
-            </template>
-        </DialogModal>
+                <DialogFooter>
+                    <Button variant="outline" @click="displayingToken = false">
+                        Close
+                    </Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
 
         <!-- API Token Permissions Modal -->
-        <DialogModal :show="managingPermissionsFor != null" @close="managingPermissionsFor = null">
-            <template #title>
-                API Token Permissions
-            </template>
+        <Dialog :open="managingPermissionsFor != null" @update:open="(val) => { if (!val) managingPermissionsFor = null }">
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>API Token Permissions</DialogTitle>
+                </DialogHeader>
 
-            <template #content>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div v-for="permission in availablePermissions" :key="permission">
                         <label class="flex items-center">
@@ -206,49 +204,48 @@ const deleteApiToken = () => {
                         </label>
                     </div>
                 </div>
-            </template>
 
-            <template #footer>
-                <Button variant="outline" @click="managingPermissionsFor = null">
-                    Cancel
-                </Button>
-
-                <Button
-                    class="ms-3"
-                    :class="{ 'opacity-25': updateApiTokenForm.processing }"
-                    :disabled="updateApiTokenForm.processing"
-                    @click="updateApiToken"
-                >
-                    Save
-                </Button>
-            </template>
-        </DialogModal>
+                <DialogFooter>
+                    <Button variant="outline" @click="managingPermissionsFor = null">
+                        Cancel
+                    </Button>
+                    <Button
+                        class="ms-3"
+                        :class="{ 'opacity-25': updateApiTokenForm.processing }"
+                        :disabled="updateApiTokenForm.processing"
+                        @click="updateApiToken"
+                    >
+                        Save
+                    </Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
 
         <!-- Delete Token Confirmation Modal -->
-        <ConfirmationModal :show="apiTokenBeingDeleted != null" @close="apiTokenBeingDeleted = null">
-            <template #title>
-                Delete API Token
-            </template>
+        <Dialog :open="apiTokenBeingDeleted != null" @update:open="(val) => { if (!val) apiTokenBeingDeleted = null }">
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Delete API Token</DialogTitle>
+                    <DialogDescription>
+                        Are you sure you would like to delete this API token?
+                    </DialogDescription>
+                </DialogHeader>
 
-            <template #content>
-                Are you sure you would like to delete this API token?
-            </template>
-
-            <template #footer>
-                <Button variant="outline" @click="apiTokenBeingDeleted = null">
-                    Cancel
-                </Button>
-
-                <Button
-                    variant="destructive"
-                    class="ms-3"
-                    :class="{ 'opacity-25': deleteApiTokenForm.processing }"
-                    :disabled="deleteApiTokenForm.processing"
-                    @click="deleteApiToken"
-                >
-                    Delete
-                </Button>
-            </template>
-        </ConfirmationModal>
+                <DialogFooter>
+                    <Button variant="outline" @click="apiTokenBeingDeleted = null">
+                        Cancel
+                    </Button>
+                    <Button
+                        variant="destructive"
+                        class="ms-3"
+                        :class="{ 'opacity-25': deleteApiTokenForm.processing }"
+                        :disabled="deleteApiTokenForm.processing"
+                        @click="deleteApiToken"
+                    >
+                        Delete
+                    </Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
     </div>
 </template>

@@ -2,7 +2,7 @@
 import { useForm } from '@inertiajs/vue3';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
+import { Label } from '@/Components/ui/label';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
 
@@ -30,7 +30,7 @@ const createTeam = () => {
 
         <template #form>
             <div class="col-span-6">
-                <InputLabel value="Team Owner" />
+                <Label>Team Owner</Label>
 
                 <div class="flex items-center mt-2">
                     <img class="object-cover size-12 rounded-full" :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">
@@ -45,7 +45,7 @@ const createTeam = () => {
             </div>
 
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="name" value="Team Name" />
+                <Label for="name">Team Name</Label>
                 <Input
                     id="name"
                     v-model="form.name"

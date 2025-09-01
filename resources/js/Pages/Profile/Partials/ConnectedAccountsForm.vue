@@ -5,7 +5,7 @@ import ActionLink from '@/Components/ActionLink.vue';
 import ActionSection from '@/Components/ActionSection.vue';
 import ConnectedAccount from '@/Components/ConnectedAccount.vue';
 import { Button } from '@/Components/ui/button';
-import DialogModal from '@/Components/DialogModal.vue';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/Components/ui/dialog';
 import InputError from '@/Components/InputError.vue';
 import { Input } from '@/Components/ui/input';
 
@@ -103,13 +103,14 @@ const closeModal = () => {
             </div>
 
             <!-- Confirmation Modal -->
-            <DialogModal :show="confirmingRemoveAccount" @close="closeModal">
-                <template #title>
-                    Are you sure you want to remove this account?
-                </template>
-
-                <template #content>
-                    Please enter your password to confirm you would like to remove this account.
+            <Dialog :open="confirmingRemoveAccount" @update:open="(val) => { if (!val) closeModal() }">
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Are you sure you want to remove this account?</DialogTitle>
+                        <DialogDescription>
+                            Please enter your password to confirm you would like to remove this account.
+                        </DialogDescription>
+                    </DialogHeader>
 
                     <div class="mt-4">
                         <Input
@@ -124,19 +125,18 @@ const closeModal = () => {
 
                         <InputError :message="form.errors.password" class="mt-2" />
                     </div>
-                </template>
 
-                <template #footer>
-                    <Button variant="outline" @click="closeModal">
-                        Cancel
-                    </Button>
-
-                    <Button class="ml-2" @click="removeAccount"
-                                   :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                        Remove Account
-                    </Button>
-                </template>
-            </DialogModal>
+                    <DialogFooter>
+                        <Button variant="outline" @click="closeModal">
+                            Cancel
+                        </Button>
+                        <Button class="ml-2" @click="removeAccount"
+                                       :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                            Remove Account
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </template>
     </ActionSection>
 </template>

@@ -2,8 +2,8 @@
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import ActionSection from '@/Components/ActionSection.vue';
-import ConfirmationModal from '@/Components/ConfirmationModal.vue';
 import { Button } from '@/Components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/Components/ui/dialog';
 
 const props = defineProps({
     team: Object,
@@ -45,31 +45,31 @@ const deleteTeam = () => {
             </div>
 
             <!-- Delete Team Confirmation Modal -->
-            <ConfirmationModal :show="confirmingTeamDeletion" @close="confirmingTeamDeletion = false">
-                <template #title>
-                    Delete Team
-                </template>
+            <Dialog :open="confirmingTeamDeletion" @update:open="(val) => { if (!val) confirmingTeamDeletion = false }">
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Delete Team</DialogTitle>
+                        <DialogDescription>
+                            Are you sure you want to delete this team? Once a team is deleted, all of its resources and data will be permanently deleted.
+                        </DialogDescription>
+                    </DialogHeader>
 
-                <template #content>
-                    Are you sure you want to delete this team? Once a team is deleted, all of its resources and data will be permanently deleted.
-                </template>
-
-                <template #footer>
-                    <Button variant="outline" @click="confirmingTeamDeletion = false">
-                        Cancel
-                    </Button>
-
-                    <Button
-                        variant="destructive"
-                        class="ms-3"
-                        :class="{ 'opacity-25': form.processing }"
-                        :disabled="form.processing"
-                        @click="deleteTeam"
-                    >
-                        Delete Team
-                    </Button>
-                </template>
-            </ConfirmationModal>
+                    <DialogFooter>
+                        <Button variant="outline" @click="confirmingTeamDeletion = false">
+                            Cancel
+                        </Button>
+                        <Button
+                            variant="destructive"
+                            class="ms-3"
+                            :class="{ 'opacity-25': form.processing }"
+                            :disabled="form.processing"
+                            @click="deleteTeam"
+                        >
+                            Delete Team
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </template>
     </ActionSection>
 </template>

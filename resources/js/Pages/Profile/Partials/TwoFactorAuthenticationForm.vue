@@ -5,7 +5,7 @@ import ActionSection from '@/Components/ActionSection.vue';
 import ConfirmsPassword from '@/Components/ConfirmsPassword.vue';
 import { Button } from '@/Components/ui/button';
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
+import { Label } from '@/Components/ui/label';
 import { Input } from '@/Components/ui/input';
 
 const props = defineProps({
@@ -152,7 +152,7 @@ const disableTwoFactorAuthentication = () => {
                     </div>
 
                     <div v-if="confirming" class="mt-4">
-                        <InputLabel for="code" value="Code" />
+                        <Label for="code">Code</Label>
 
                         <Input
                             id="code"

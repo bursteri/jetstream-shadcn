@@ -1,6 +1,6 @@
 <script setup>
 import { ref, reactive, nextTick } from 'vue';
-import DialogModal from './DialogModal.vue';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/Components/ui/dialog';
 import InputError from './InputError.vue';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
@@ -75,13 +75,12 @@ const closeModal = () => {
             <slot />
         </span>
 
-        <DialogModal :show="confirmingPassword" @close="closeModal">
-            <template #title>
-                {{ title }}
-            </template>
-
-            <template #content>
-                {{ content }}
+        <Dialog :open="confirmingPassword" @update:open="(val) => { if (!val) closeModal() }">
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>{{ title }}</DialogTitle>
+                    <DialogDescription>{{ content }}</DialogDescription>
+                </DialogHeader>
 
                 <div class="mt-4">
                     <Input
@@ -96,22 +95,21 @@ const closeModal = () => {
 
                     <InputError :message="form.error" class="mt-2" />
                 </div>
-            </template>
 
-            <template #footer>
-                <Button variant="outline" @click="closeModal">
-                    Cancel
-                </Button>
-
-                <Button
-                    class="ms-3"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                    @click="confirmPassword"
-                >
-                    {{ button }}
-                </Button>
-            </template>
-        </DialogModal>
+                <DialogFooter>
+                    <Button variant="outline" @click="closeModal">
+                        Cancel
+                    </Button>
+                    <Button
+                        class="ms-3"
+                        :class="{ 'opacity-25': form.processing }"
+                        :disabled="form.processing"
+                        @click="confirmPassword"
+                    >
+                        {{ button }}
+                    </Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
     </span>
 </template>

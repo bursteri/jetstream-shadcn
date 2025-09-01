@@ -1,7 +1,7 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
-import Checkbox from '@/Components/Checkbox.vue';
+import { Checkbox } from '@/Components/ui/checkbox';
 import InputError from '@/Components/InputError.vue';
 import Socialstream from '@/Components/Socialstream.vue';
 
