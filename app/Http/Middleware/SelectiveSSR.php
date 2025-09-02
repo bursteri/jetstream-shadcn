@@ -15,9 +15,7 @@ class SelectiveSSR
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Enable SSR for this request
         $request->attributes->set('ssr_enabled', true);
-        
         return $next($request);
     }
 }

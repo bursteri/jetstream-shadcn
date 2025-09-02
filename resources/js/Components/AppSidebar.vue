@@ -86,6 +86,12 @@ const data = computed(() => {
                 icon: CodeXml,
                 isActive: isActiveRoute('api-tokens.index'),
             },
+            {
+                name: 'Home',
+                url: route('home'),
+                icon: CodeXml,
+                isActive: isActiveRoute('home'),
+            },
         ],
     };
 });

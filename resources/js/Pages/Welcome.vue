@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Head, Link, usePage } from '@inertiajs/vue3';
-import SSRIndicator from '@/Components/SSRIndicator.vue';
 
 const page = usePage() as any;
 </script>
@@ -788,6 +787,5 @@ const page = usePage() as any;
         <div class="hidden h-14.5 lg:block"></div>
         
         <!-- SSR Indicator -->
-        <SSRIndicator />
     </div>
 </template>

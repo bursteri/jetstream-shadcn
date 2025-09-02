@@ -7,7 +7,6 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/Components/ui/s
 import { Toaster } from 'vue-sonner';
 import 'vue-sonner/style.css'; // vue-sonner v2 requires this import
 import { useFlashMessages } from '@/composables/useFlashMessages';
-import SSRIndicator from '@/Components/SSRIndicator.vue';
 
 interface Props {
     title?: string;
@@ -77,6 +76,5 @@ useFlashMessages();
         </SidebarProvider>
         
         <!-- SSR Indicator -->
-        <SSRIndicator />
     </div>
 </template>

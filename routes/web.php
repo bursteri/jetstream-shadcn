@@ -12,7 +12,7 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-})->middleware(['ssr']);
+})->middleware(['ssr'])->name('home');
 
 Route::middleware([
     'auth:sanctum',
