@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { Monitor, Moon, Sun } from 'lucide-vue-next';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/Components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/Components/ui/sidebar';
 import { useAppearance } from '@/composables/useAppearance';
 
 const { appearance, updateAppearance } = useAppearance();
-const { isMobile } = useSidebar();
 
 const themes = [
     { value: 'light', label: 'Light', icon: Sun },
@@ -30,7 +29,7 @@ const currentIcon = computed(() => {
                         <span>Theme</span>
                     </SidebarMenuButton>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent side="top" align="start" class="w-48">
+                <DropdownMenuContent side="right" align="end" class="w-48">
                     <DropdownMenuItem v-for="theme in themes" :key="theme.value" @click="updateAppearance(theme.value)" class="cursor-pointer">
                         <component :is="theme.icon" class="mr-2 h-4 w-4" />
                         <span>{{ theme.label }}</span>
