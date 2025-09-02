@@ -207,15 +207,11 @@ This starter kit includes [Socialstream](https://docs.socialstream.dev) for soci
 
 ## Customization
 
-### Tailwind Configuration
-Modify `tailwind.config.js` to customize your design system:
-- Colors
-- Fonts
-- Spacing
-- Breakpoints
+### Tailwind CSS v4 Configuration
+This project uses Tailwind CSS v4, which uses CSS-based configuration instead of JavaScript config files. Customize your design system directly in `resources/css/app.css` using CSS variables and Tailwind's new CSS-first configuration approach.
 
 ### Theme Customization
-Update CSS variables in `resources/css/app.css`:
+Update CSS variables and Tailwind theme in `resources/css/app.css`:
 ```css
 :root {
   --background: 0 0% 100%;
