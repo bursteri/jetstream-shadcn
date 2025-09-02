@@ -38,6 +38,7 @@ declare module '@inertiajs/vue3' {
             value: T & {
                 auth?: Auth;
                 jetstream?: JetstreamFeatures;
+                socialstream?: Socialstream;
             };
         };
     };
