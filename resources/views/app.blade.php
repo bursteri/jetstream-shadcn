@@ -29,6 +29,10 @@
         </script>
     </head>
     <body class="font-sans antialiased">
-        @inertia
+        @if(request()->attributes->get('ssr_enabled', false))
+            @inertia
+        @else
+            <div id="app" data-page="{{ json_encode($page) }}"></div>
+        @endif
     </body>
 </html>

@@ -36,6 +36,7 @@ class HandleInertiaRequests extends Middleware
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
+            'ssr' => $request->attributes->get('ssr_enabled', false),
         ];
     }
 }

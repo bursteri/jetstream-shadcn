@@ -17,7 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
 
-        //
+        $middleware->alias([
+            'ssr' => \App\Http\Middleware\SelectiveSSR::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
