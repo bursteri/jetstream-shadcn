@@ -5,6 +5,7 @@ A modern Laravel starter kit combining Jetstream's authentication scaffolding wi
 ## Features
 
 - 🔐 **Full Authentication System** - Registration, login, password reset, email verification
+- 🌐 **Social Authentication (Socialstream)** - Login with GitHub, Google, Facebook, LinkedIn, Twitter, and more
 - 👥 **Team Management** - Create and manage teams with role-based permissions
 - 🎨 **Shadcn/UI Components** - Modern, accessible UI components built with Radix Vue and Tailwind CSS
 - ⚡ **Vue 3 + Inertia.js** - SPA-like experience with server-side routing
@@ -146,6 +147,58 @@ To add more Shadcn/UI components:
 - Password reset functionality
 - Two-factor authentication (optional)
 
+### Social Authentication (Socialstream)
+This starter kit includes [Socialstream](https://docs.socialstream.dev) for social authentication:
+
+- **OAuth Providers Supported:**
+  - GitHub
+  - Google
+  - Facebook
+  - LinkedIn
+  - Twitter/X
+  - GitLab
+  - Bitbucket
+  - Slack
+
+- **Features:**
+  - Link multiple social accounts to one user
+  - Manage connected accounts from profile settings
+  - Generate provider avatars
+  - Remember session logins
+  - Refresh OAuth tokens
+
+#### Configuring Social Providers
+
+1. Add your OAuth app credentials to `.env`:
+   ```env
+   GITHUB_CLIENT_ID=your_github_client_id
+   GITHUB_CLIENT_SECRET=your_github_client_secret
+   GITHUB_REDIRECT_URI=http://localhost:8000/oauth/github/callback
+
+   GOOGLE_CLIENT_ID=your_google_client_id
+   GOOGLE_CLIENT_SECRET=your_google_client_secret
+   GOOGLE_REDIRECT_URI=http://localhost:8000/oauth/google/callback
+   
+   # Add other providers as needed
+   ```
+
+2. Enable/disable providers in `config/socialstream.php`:
+   ```php
+   'providers' => [
+       'github',
+       'google',
+       // 'facebook',
+       // 'linkedin',
+       // Add or remove as needed
+   ],
+   ```
+
+3. Configure OAuth apps:
+   - **GitHub**: [Create OAuth App](https://github.com/settings/developers)
+   - **Google**: [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
+   - **Facebook**: [Facebook Developers](https://developers.facebook.com/apps)
+   - **LinkedIn**: [LinkedIn Developers](https://www.linkedin.com/developers/apps)
+
 ### Teams (if enabled)
 - Create and manage teams
 - Invite team members
@@ -269,6 +322,7 @@ For issues and questions:
 
 - [Laravel](https://laravel.com)
 - [Laravel Jetstream](https://jetstream.laravel.com)
+- [Socialstream](https://socialstream.dev) - Social authentication for Laravel
 - [Shadcn/UI](https://ui.shadcn.com)
 - [Shadcn/Vue](https://www.shadcn-vue.com)
 - [Vue.js](https://vuejs.org)

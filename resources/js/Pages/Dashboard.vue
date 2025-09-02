@@ -1,43 +1,23 @@
 <script setup lang="ts">
-import AppSidebar from '@/Components/AppSidebar.vue';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/Components/ui/breadcrumb';
-import { Separator } from '@/Components/ui/separator';
-import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/Components/ui/sidebar';
+import SidebarLayout from '@/Layouts/SidebarLayout.vue';
 </script>
 
 <template>
-    <SidebarProvider>
-        <AppSidebar />
-        <SidebarInset>
-            <header
-                class="flex h-14 shrink-0 items-center gap-2 border-b border-zinc-900/5 transition-[width,height] ease-linear dark:border-zinc-800"
-            >
-                <div class="flex items-center gap-2 px-4">
-                    <SidebarTrigger class="-ml-1" />
-                    <Separator orientation="vertical" class="mr-2 h-4" />
-                    <Breadcrumb>
-                        <BreadcrumbList>
-                            <BreadcrumbItem class="hidden md:block">
-                                <BreadcrumbLink href="#"> Building Your Application </BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator class="hidden md:block" />
-                            <BreadcrumbItem>
-                                <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                            </BreadcrumbItem>
-                        </BreadcrumbList>
-                    </Breadcrumb>
-                </div>
-            </header>
-            <div class="flex flex-1 flex-col gap-4 p-4">
-                <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-                    <div class="aspect-video rounded-xl border border-zinc-900/5 bg-zinc-50 dark:border-zinc-900 dark:bg-zinc-900/50" />
-                    <div class="aspect-video rounded-xl border border-zinc-900/5 bg-zinc-50 dark:border-zinc-900 dark:bg-zinc-900/50" />
-                    <div class="aspect-video rounded-xl border border-zinc-900/5 bg-zinc-50 dark:border-zinc-900 dark:bg-zinc-900/50" />
-                </div>
-                <div
-                    class="min-h-[100vh] flex-1 rounded-xl border border-zinc-900/5 bg-zinc-50 md:min-h-min dark:border-zinc-900 dark:bg-zinc-900/50"
-                />
+    <SidebarLayout 
+        title="Dashboard"
+        :breadcrumbs="[
+            { label: 'Dashboard', current: true }
+        ]"
+    >
+        <div class="flex flex-1 flex-col gap-4 p-4">
+            <div class="grid auto-rows-min gap-4 md:grid-cols-3">
+                <div class="aspect-video rounded-xl border border-zinc-900/5 bg-zinc-50 dark:border-zinc-900 dark:bg-zinc-900/50" />
+                <div class="aspect-video rounded-xl border border-zinc-900/5 bg-zinc-50 dark:border-zinc-900 dark:bg-zinc-900/50" />
+                <div class="aspect-video rounded-xl border border-zinc-900/5 bg-zinc-50 dark:border-zinc-900 dark:bg-zinc-900/50" />
             </div>
-        </SidebarInset>
-    </SidebarProvider>
+            <div
+                class="min-h-[100vh] flex-1 rounded-xl border border-zinc-900/5 bg-zinc-50 md:min-h-min dark:border-zinc-900 dark:bg-zinc-900/50"
+            />
+        </div>
+    </SidebarLayout>
 </template>
