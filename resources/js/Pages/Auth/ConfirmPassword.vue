@@ -1,5 +1,5 @@
-<script setup>
-import { ref } from 'vue';
+<script setup lang="ts">
+import { ref, Ref } from 'vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
 import InputError from '@/Components/InputError.vue';
@@ -12,14 +12,14 @@ const form = useForm({
     password: '',
 });
 
-const passwordInput = ref(null);
+const passwordInput: Ref<HTMLInputElement | null> = ref(null);
 
-const submit = () => {
+const submit = (): void => {
     form.post(route('password.confirm'), {
         onFinish: () => {
             form.reset();
 
-            passwordInput.value.focus();
+            passwordInput.value?.focus();
         },
     });
 };

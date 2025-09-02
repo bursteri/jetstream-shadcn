@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { Head, useForm } from '@inertiajs/vue3';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
 import InputError from '@/Components/InputError.vue';
@@ -7,10 +7,12 @@ import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
 
-const props = defineProps({
-    email: String,
-    token: String,
-});
+interface Props {
+    email: string;
+    token: string;
+}
+
+const props = defineProps<Props>();
 
 const form = useForm({
     token: props.token,
@@ -19,7 +21,7 @@ const form = useForm({
     password_confirmation: '',
 });
 
-const submit = () => {
+const submit = (): void => {
     form.post(route('password.update'), {
         onFinish: () => form.reset('password', 'password_confirmation'),
     });

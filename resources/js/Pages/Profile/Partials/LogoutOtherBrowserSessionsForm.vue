@@ -126,7 +126,7 @@ const closeModal = () => {
             </div>
 
             <div class="mt-5 flex items-center">
-                <Button @click="confirmLogout"> Log Out Other Browser Sessions </Button>
+                <Button @click="confirmLogout" variant="outline"> Log Out Other Browser Sessions </Button>
             </div>
 
             <!-- Log Out Other Devices Confirmation Modal -->

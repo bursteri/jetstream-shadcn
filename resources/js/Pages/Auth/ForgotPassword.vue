@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
 import InputError from '@/Components/InputError.vue';
@@ -7,15 +7,17 @@ import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
 
-defineProps({
-    status: String,
-});
+interface Props {
+    status?: string;
+}
+
+defineProps<Props>();
 
 const form = useForm({
     email: '',
 });
 
-const submit = () => {
+const submit = (): void => {
     form.post(route('password.email'));
 };
 </script>

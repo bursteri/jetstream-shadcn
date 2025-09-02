@@ -49,7 +49,7 @@ const closeModal = () => {
             </div>
 
             <div class="mt-5">
-                <Button variant="destructive" @click="confirmUserDeletion"> Delete Account </Button>
+                <Button variant="danger" @click="confirmUserDeletion"> Delete Account </Button>
             </div>
 
             <!-- Delete Account Confirmation Modal -->

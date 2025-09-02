@@ -1,7 +1,6 @@
-<script setup>
+<script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
-import { Checkbox } from '@/Components/ui/checkbox';
 import InputError from '@/Components/InputError.vue';
 import Socialstream from '@/Components/Socialstream.vue';
 
@@ -9,10 +8,12 @@ import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
 
-defineProps({
-    canResetPassword: Boolean,
-    status: String,
-});
+interface Props {
+    canResetPassword?: boolean;
+    status?: string;
+}
+
+defineProps<Props>();
 
 const form = useForm({
     email: '',
@@ -20,7 +21,7 @@ const form = useForm({
     remember: true,
 });
 
-const submit = () => {
+const submit = (): void => {
     form.transform((data) => ({
         ...data,
         remember: form.remember ? 'on' : '',

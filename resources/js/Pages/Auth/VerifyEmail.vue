@@ -1,17 +1,19 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
 
 import { Button } from '@/Components/ui/button';
 
-const props = defineProps({
-    status: String,
-});
+interface Props {
+    status?: string;
+}
+
+const props = defineProps<Props>();
 
 const form = useForm({});
 
-const submit = () => {
+const submit = (): void => {
     form.post(route('verification.send'));
 };
 
