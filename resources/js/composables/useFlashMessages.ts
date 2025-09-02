@@ -1,33 +1,19 @@
-import { watchEffect } from 'vue';
+import { watchEffect, nextTick } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import { toast } from 'vue-sonner';
 
 export function useFlashMessages() {
     const page = usePage();
 
-    watchEffect(() => {
-        const flash = page.props.jetstream?.flash;
+    watchEffect(async () => {
+        const flash = page.props.flash;
         
         if (!flash) return;
         
-        // Handle banner messages
-        if (flash.banner) {
-            const style = flash.bannerStyle || 'success';
-            
-            if (style === 'success') {
-                toast.success(flash.banner);
-            } else if (style === 'danger') {
-                toast.error(flash.banner);
-            } else {
-                toast(flash.banner);
-            }
-        }
+        // Wait for next tick to ensure DOM is ready
+        await nextTick();
         
-        // Handle other flash message types if they exist
-        if (flash.message) {
-            toast(flash.message);
-        }
-        
+        // Handle each flash message type
         if (flash.success) {
             toast.success(flash.success);
         }
@@ -42,6 +28,10 @@ export function useFlashMessages() {
         
         if (flash.info) {
             toast.info(flash.info);
+        }
+        
+        if (flash.message) {
+            toast(flash.message);
         }
     });
 }

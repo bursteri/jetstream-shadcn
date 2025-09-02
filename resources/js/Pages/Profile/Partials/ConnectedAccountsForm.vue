@@ -65,13 +65,13 @@ const handleConnect = (provider: SocialstreamProvider) => {
 
         <template #content>
             <div class="space-y-6">
-                <div v-for="provider in ($page.props as any).socialstream?.providers" :key="provider.id">
+                <div v-for="provider in (page.props as any).socialstream?.providers" :key="provider.id">
                     <ConnectedAccount :provider="provider" :created-at="getAccountForProvider(provider)?.created_at">
                         <template #action>
                             <template v-if="getAccountForProvider(provider)">
                                 <div class="flex items-center space-x-6">
                                     <button
-                                        v-if="$page.props.jetstream?.managesProfilePhotos && getAccountForProvider(provider)?.avatar_path"
+                                        v-if="(page.props as any).jetstream?.managesProfilePhotos && getAccountForProvider(provider)?.avatar_path"
                                         @click="setProfilePhoto(getAccountForProvider(provider)!.id)"
                                         class="ms-6 cursor-pointer text-sm text-zinc-500 hover:text-zinc-700 focus:outline-none"
                                     >
@@ -81,7 +81,7 @@ const handleConnect = (provider: SocialstreamProvider) => {
                                     <Button
                                         variant="destructive"
                                         @click="confirmRemoveAccount(getAccountForProvider(provider)!.id)"
-                                        v-if="($page.props as any).socialstream?.connectedAccounts.length > 1 || ($page.props as any).socialstream?.hasPassword"
+                                        v-if="(page.props as any).socialstream?.connectedAccounts.length > 1 || (page.props as any).socialstream?.hasPassword"
                                     >
                                         Remove
                                     </Button>

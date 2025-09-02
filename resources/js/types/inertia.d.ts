@@ -1,5 +1,4 @@
 import type { Auth, JetstreamFeatures } from './index';
-
 export interface SocialstreamProvider {
     id: string;
     name: string;
@@ -22,12 +21,24 @@ export interface Socialstream {
     hasPassword: boolean;
 }
 
+export interface FlashMessages {
+    banner?: string;
+    bannerStyle?: 'success' | 'danger' | 'warning' | 'info';
+    message?: string;
+    success?: string;
+    error?: string;
+    warning?: string;
+    info?: string;
+}
+
 declare module '@inertiajs/core' {
     interface PageProps {
         auth?: Auth;
         jetstream?: JetstreamFeatures;
         socialstream?: Socialstream;
+        flash?: FlashMessages;
         errors?: Record<string, string>;
+        ssr?: boolean;
         [key: string]: any;
     }
 }
@@ -39,6 +50,8 @@ declare module '@inertiajs/vue3' {
                 auth?: Auth;
                 jetstream?: JetstreamFeatures;
                 socialstream?: Socialstream;
+                flash?: FlashMessages;
+                ssr?: boolean;
             };
         };
     };

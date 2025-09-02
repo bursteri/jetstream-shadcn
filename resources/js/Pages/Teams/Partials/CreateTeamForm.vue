@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { useForm } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
 import { Label } from '@/Components/ui/label';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
+
+const page = usePage();
 
 const form = useForm({
     name: '',
@@ -33,12 +35,12 @@ const createTeam = () => {
                 <Label>Team Owner</Label>
 
                 <div class="flex items-center mt-2">
-                    <img class="object-cover size-12 rounded-full" :src="$page.props.auth?.user.profile_photo_url" :alt="$page.props.auth?.user.name">
+                    <img class="object-cover size-12 rounded-full" :src="(page.props as any).auth?.user?.profile_photo_url" :alt="(page.props as any).auth?.user?.name">
 
                     <div class="ms-4 leading-tight">
-                        <div class="text-zinc-900 dark:text-white">{{ $page.props.auth?.user.name }}</div>
+                        <div class="text-zinc-900 dark:text-white">{{ (page.props as any).auth?.user?.name }}</div>
                         <div class="text-sm text-zinc-700 dark:text-zinc-300">
-                            {{ $page.props.auth?.user.email }}
+                            {{ (page.props as any).auth?.user?.email }}
                         </div>
                     </div>
                 </div>

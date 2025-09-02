@@ -9,6 +9,7 @@ A modern Laravel starter kit combining Jetstream's authentication scaffolding wi
 - 👥 **Team Management** - Create and manage teams with role-based permissions
 - 🎨 **Shadcn/UI Components** - Modern, accessible UI components built with Radix Vue and Tailwind CSS
 - ⚡ **Vue 3 + Inertia.js** - SPA-like experience with server-side routing
+- 🚀 **Server-Side Rendering (SSR)** - Improved SEO and initial page load performance
 - 🎯 **TypeScript Ready** - Full TypeScript support for better developer experience
 - 🌙 **Dark Mode Support** - Built-in dark mode toggle
 - 📱 **Responsive Design** - Mobile-first approach with Tailwind CSS
@@ -204,6 +205,37 @@ This starter kit includes [Socialstream](https://docs.socialstream.dev) for soci
 - Invite team members
 - Assign roles and permissions
 - Switch between teams
+
+## Server-Side Rendering (SSR)
+
+This starter kit includes SSR support for improved SEO and faster initial page loads. The SSR implementation is configured in [`resources/js/ssr.ts`](resources/js/ssr.ts).
+
+### SSR Benefits
+- **Better SEO** - Search engines can crawl your content without executing JavaScript
+- **Faster Initial Load** - Users see content immediately without waiting for JavaScript to hydrate
+- **Social Media Sharing** - Proper meta tags and previews for social platforms
+- **Improved Performance** - Reduced time to first contentful paint
+
+### SSR Commands
+```bash
+# Build SSR bundle
+npm run build
+
+# Start SSR server (production)
+php artisan inertia:start-ssr
+
+# Stop SSR server
+php artisan inertia:stop-ssr
+```
+
+### SSR Configuration
+The SSR setup handles:
+- Vuetify components and theme configuration
+- Dark mode persistence across server and client
+- Proper hydration of authenticated user data
+- Social authentication provider integration
+
+For development, SSR runs automatically with `npm run dev`. In production, use the Artisan commands above to manage the SSR server.
 
 ## Customization
 

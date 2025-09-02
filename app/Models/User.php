@@ -12,8 +12,9 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasConnectedAccounts;
@@ -73,7 +74,7 @@ class User extends Authenticatable
     protected function profilePhotoUrl(): Attribute
     {
         return filter_var($this->profile_photo_path, FILTER_VALIDATE_URL)
-            ? Attribute::get(fn () => $this->profile_photo_path)
+            ? Attribute::get(fn() => $this->profile_photo_path)
             : $this->getPhotoUrl();
     }
 }

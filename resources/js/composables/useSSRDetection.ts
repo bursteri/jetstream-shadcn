@@ -14,7 +14,7 @@ export function useSSRDetection() {
     
     // Get SSR enabled flag from page props
     const page = usePage();
-    isSSREnabled.value = page.props.ssr as boolean || false;
+    isSSREnabled.value = (page.props.value as any)?.ssr || false;
     
     onMounted(() => {
         // Check meta tag to see if page was SSR rendered

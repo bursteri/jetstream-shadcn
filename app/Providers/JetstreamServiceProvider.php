@@ -9,6 +9,7 @@ use App\Actions\Jetstream\DeleteUser;
 use App\Actions\Jetstream\InviteTeamMember;
 use App\Actions\Jetstream\RemoveTeamMember;
 use App\Actions\Jetstream\UpdateTeamName;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Jetstream\Jetstream;
 
@@ -28,6 +29,7 @@ class JetstreamServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configurePermissions();
+        $this->configureFlashMessages();
 
         Jetstream::createTeamsUsing(CreateTeam::class);
         Jetstream::updateTeamNamesUsing(UpdateTeamName::class);
@@ -36,6 +38,22 @@ class JetstreamServiceProvider extends ServiceProvider
         Jetstream::removeTeamMembersUsing(RemoveTeamMember::class);
         Jetstream::deleteTeamsUsing(DeleteTeam::class);
         Jetstream::deleteUsersUsing(DeleteUser::class);
+    }
+
+    /**
+     * Configure flash message macros for RedirectResponse.
+     */
+    protected function configureFlashMessages(): void
+    {
+        RedirectResponse::macro('banner', function ($message) {
+            /** @var \Illuminate\Http\RedirectResponse $this */
+            return $this->with('success', $message);
+        });
+
+        RedirectResponse::macro('dangerBanner', function ($message) {
+            /** @var \Illuminate\Http\RedirectResponse $this */
+            return $this->with('error', $message);
+        });
     }
 
     /**

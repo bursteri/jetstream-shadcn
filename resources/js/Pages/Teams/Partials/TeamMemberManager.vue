@@ -291,7 +291,7 @@ const displayableRole = (role: string) => {
 
                                 <!-- Leave Team -->
                                 <button
-                                    v-if="$page.props.auth?.user?.id === user.id"
+                                    v-if="(page.props as any).auth?.user?.id === user.id"
                                     class="ms-6 cursor-pointer text-sm text-red-500"
                                     @click="confirmLeavingTeam"
                                 >

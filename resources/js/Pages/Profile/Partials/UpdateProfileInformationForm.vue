@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Link, router, useForm } from '@inertiajs/vue3';
+import { Link, router, useForm, usePage } from '@inertiajs/vue3';
 import { toast } from 'vue-sonner';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
@@ -14,6 +14,8 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+
+const page = usePage() as any;
 
 const form = useForm({
     _method: 'PUT',
@@ -94,7 +96,7 @@ const clearPhotoFileInput = () => {
 
         <template #form>
             <!-- Profile Photo -->
-            <div v-if="$page.props.jetstream?.managesProfilePhotos" class="col-span-6 sm:col-span-4">
+            <div v-if="page.props.jetstream?.managesProfilePhotos" class="col-span-6 sm:col-span-4">
                 <!-- Profile Photo File Input -->
                 <input
                     id="photo"
@@ -163,7 +165,7 @@ const clearPhotoFileInput = () => {
                 />
                 <InputError :message="form.errors.email" class="mt-2" />
 
-                <div v-if="($page.props as any).jetstream?.hasEmailVerification && user.email_verified_at === null">
+                <div v-if="page.props.jetstream?.hasEmailVerification && user.email_verified_at === null">
                     <p class="text-sm mt-2 dark:text-white">
                         Your email address is unverified.
 

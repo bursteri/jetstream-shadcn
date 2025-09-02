@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
 import InputError from '@/Components/InputError.vue';
 import Socialstream from '@/Components/Socialstream.vue';
@@ -14,6 +14,8 @@ interface Props {
 }
 
 defineProps<Props>();
+
+const page = usePage() as any;
 
 const form = useForm({
     email: '',
@@ -60,11 +62,11 @@ const submit = (): void => {
             </Button>
         </form>
         <Socialstream
-            v-if="$page.props.socialstream?.show && $page.props.socialstream?.providers?.length"
-            :error="$page.props?.errors?.socialstream || undefined"
-            :prompt="$page.props.socialstream?.prompt || 'Or Login Via'"
-            :labels="$page.props.socialstream?.labels || {}"
-            :providers="$page.props.socialstream?.providers || []"
+            v-if="page.props.socialstream?.show && page.props.socialstream?.providers?.length"
+            :error="page.props?.errors?.socialstream || undefined"
+            :prompt="page.props.socialstream?.prompt || 'Or Login Via'"
+            :labels="page.props.socialstream?.labels || {}"
+            :providers="page.props.socialstream?.providers || []"
         />
         <div class="mt-4 text-center text-sm">
             Don't have an account?

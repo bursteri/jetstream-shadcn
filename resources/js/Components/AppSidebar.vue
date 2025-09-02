@@ -98,7 +98,7 @@ const data = computed(() => {
         </SidebarHeader>
         <SidebarContent>
             <NavMain :items="data.navMain" label="Platform" />
-            <NavMain v-if="$page.props.jetstream?.hasApiFeatures" :items="data.projects" />
+            <NavMain v-if="(page.props as any).jetstream?.hasApiFeatures" :items="data.projects" />
         </SidebarContent>
         <SidebarFooter>
             <AppearanceToggle />

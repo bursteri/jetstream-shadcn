@@ -19,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'ssr' => \App\Http\Middleware\SelectiveSSR::class,
+            'team' => \App\Http\Middleware\EnsureUserHasTeam::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

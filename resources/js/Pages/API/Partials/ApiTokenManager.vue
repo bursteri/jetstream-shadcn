@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, type Ref } from 'vue';
-import { useForm } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 import { toast } from 'vue-sonner';
 import ActionSection from '@/Components/ActionSection.vue';
 import { Checkbox } from '@/Components/ui/checkbox';
@@ -18,6 +18,8 @@ const props = defineProps<{
     availablePermissions: string[];
     defaultPermissions: string[];
 }>();
+
+const page = usePage() as any;
 
 const createApiTokenForm = useForm({
     name: '',
@@ -51,7 +53,7 @@ const manageApiTokenPermissions = (token: ApiToken) => {
 };
 
 const updateApiToken = () => {
-    updateApiTokenForm.put(route('api-tokens.update', managingPermissionsFor.value), {
+    updateApiTokenForm.put(route('api-tokens.update', { token: managingPermissionsFor.value?.id }), {
         preserveScroll: true,
         preserveState: true,
         onSuccess: () => {
@@ -66,7 +68,7 @@ const confirmApiTokenDeletion = (token: ApiToken) => {
 };
 
 const deleteApiToken = () => {
-    deleteApiTokenForm.delete(route('api-tokens.destroy', apiTokenBeingDeleted.value), {
+    deleteApiTokenForm.delete(route('api-tokens.destroy', { token: apiTokenBeingDeleted.value?.id }), {
         preserveScroll: true,
         preserveState: true,
         onSuccess: () => {
@@ -167,10 +169,10 @@ const deleteApiToken = () => {
                 </DialogHeader>
 
                 <div
-                    v-if="$page.props.jetstream.flash.token"
+                    v-if="page.props.jetstream.flash.token"
                     class="rounded bg-zinc-100 px-4 py-2 font-mono text-sm break-all text-zinc-500 dark:bg-zinc-900"
                 >
-                    {{ $page.props.jetstream.flash.token }}
+                    {{ page.props.jetstream.flash.token }}
                 </div>
 
                 <DialogFooter>
