@@ -66,7 +66,7 @@ const shouldParentBeActive = (item: NavItem): boolean => {
                                 <DropdownMenuLabel class="text-muted-foreground -mb-1 text-xs">{{ item.title || item.name }}</DropdownMenuLabel>
                                 <DropdownMenuItem v-for="subItem in item.items" :key="subItem.title" as-child>
                                     <Link :href="subItem.url" :class="subItem.isActive ? 'font-semibold' : ''">
-                                        <Dot v-if="subItem.isActive" class="-mx-1 text-black" stroke-width="5" />
+                                        <Dot v-if="subItem.isActive" class="-mx-1 text-foreground" stroke-width="5" />
                                         <span>
                                             {{ subItem.title }}
                                         </span>

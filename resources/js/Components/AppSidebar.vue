@@ -7,6 +7,7 @@ import { computed } from 'vue';
 import NavMain from '@/Components/NavMain.vue';
 import NavUser from '@/Components/NavUser.vue';
 import NavTeam from '@/Components/NavTeam.vue';
+import AppearanceToggle from '@/Components/AppearanceToggle.vue';
 
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from '@/Components/ui/sidebar';
 
@@ -100,6 +101,7 @@ const data = computed(() => {
             <NavMain v-if="$page.props.jetstream?.hasApiFeatures" :items="data.projects" />
         </SidebarContent>
         <SidebarFooter>
+            <AppearanceToggle />
             <NavUser :user="data.user" />
         </SidebarFooter>
         <SidebarRail />

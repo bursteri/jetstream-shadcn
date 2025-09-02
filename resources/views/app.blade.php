@@ -15,28 +15,16 @@
         @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
         @inertiaHead
         <script>
-            // Dark mode detection and application
+            // Initialize theme from appearance composable
             (function() {
-                // Check for saved preference or default to system preference
-                const savedTheme = localStorage.getItem('theme');
+                const savedAppearance = localStorage.getItem('appearance');
                 const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
                 
-                if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                if (savedAppearance === 'dark' || (savedAppearance === 'system' && systemPrefersDark) || (!savedAppearance && systemPrefersDark)) {
                     document.documentElement.classList.add('dark');
-                } else {
+                } else if (savedAppearance === 'light' || (savedAppearance === 'system' && !systemPrefersDark)) {
                     document.documentElement.classList.remove('dark');
                 }
-                
-                // Listen for system preference changes
-                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-                    if (!localStorage.getItem('theme')) {
-                        if (e.matches) {
-                            document.documentElement.classList.add('dark');
-                        } else {
-                            document.documentElement.classList.remove('dark');
-                        }
-                    }
-                });
             })();
         </script>
     </head>
