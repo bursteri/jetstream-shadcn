@@ -48,56 +48,53 @@ const user = computed(() => props.auth?.user || page.props.value?.auth?.user);
 </script>
 
 <template>
-    <SidebarLayout 
+    <SidebarLayout
         title="Profile"
         :breadcrumbs="[
             { label: 'Account', href: '#' },
-            { label: 'Profile', current: true }
+            { label: 'Profile', current: true },
         ]"
     >
-        <div class="p-4">
-            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+        <div class="p-4 bg-zinc-50/50">
+            <div class="mx-auto max-w-7xl py-10 sm:px-6 lg:px-8">
                 <div v-if="props.jetstream?.canUpdateProfileInformation && user">
-                    <UpdateProfileInformationForm :user="user"/>
+                    <UpdateProfileInformationForm :user="user" />
 
-                    <SectionBorder/>
+                    <SectionBorder />
                 </div>
 
                 <div v-if="props.jetstream?.canUpdatePassword && props.socialstream?.hasPassword">
-                    <UpdatePasswordForm class="mt-10 sm:mt-0"/>
+                    <UpdatePasswordForm class="mt-10 sm:mt-0" />
 
-                    <SectionBorder/>
+                    <SectionBorder />
                 </div>
 
                 <div v-else>
-                    <SetPasswordForm class="mt-10 sm:mt-0"/>
+                    <SetPasswordForm class="mt-10 sm:mt-0" />
 
-                    <SectionBorder/>
+                    <SectionBorder />
                 </div>
 
-                <div
-                    v-if="props.jetstream?.canManageTwoFactorAuthentication && props.socialstream?.hasPassword">
-                    <TwoFactorAuthenticationForm :requires-confirmation="props.confirmsTwoFactorAuthentication"
-                                                 class="mt-10 sm:mt-0"/>
+                <div v-if="props.jetstream?.canManageTwoFactorAuthentication && props.socialstream?.hasPassword">
+                    <TwoFactorAuthenticationForm :requires-confirmation="props.confirmsTwoFactorAuthentication" class="mt-10 sm:mt-0" />
 
-                    <SectionBorder/>
+                    <SectionBorder />
                 </div>
 
                 <div v-if="props.socialstream?.show">
-                    <ConnectedAccountsForm class="mt-10 sm:mt-0"/>
+                    <ConnectedAccountsForm class="mt-10 sm:mt-0" />
                 </div>
 
                 <div v-if="props.socialstream?.hasPassword">
-                    <SectionBorder/>
+                    <SectionBorder />
 
-                    <LogoutOtherBrowserSessionsForm :sessions="props.sessions" class="mt-10 sm:mt-0"/>
+                    <LogoutOtherBrowserSessionsForm :sessions="props.sessions" class="mt-10 sm:mt-0" />
                 </div>
 
-                <template
-                    v-if="props.jetstream?.hasAccountDeletionFeatures && props.socialstream?.hasPassword">
-                    <SectionBorder/>
+                <template v-if="props.jetstream?.hasAccountDeletionFeatures && props.socialstream?.hasPassword">
+                    <SectionBorder />
 
-                    <DeleteUserForm class="mt-10 sm:mt-0"/>
+                    <DeleteUserForm class="mt-10 sm:mt-0" />
                 </template>
             </div>
         </div>

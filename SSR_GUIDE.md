@@ -7,13 +7,13 @@ This application now supports selective SSR, allowing you to enable server-side 
 ### 1. Middleware-Based Control
 The `SelectiveSSR` middleware (`app/Http/Middleware/SelectiveSSR.php`) sets an attribute on the request to enable SSR for specific routes.
 
-### 2. Configuration
-The middleware is registered in `bootstrap/app.php` with the alias `ssr`, making it available for use in routes.
+### 2. Service Provider Override
+The `InertiaSSRServiceProvider` (`app/Providers/InertiaSSRServiceProvider.php`) overrides Inertia's default SSR gateway to check the request attribute before enabling SSR.
 
-### 3. Template Logic
-The `resources/views/app.blade.php` template checks for the SSR flag and renders accordingly:
-- With SSR: Uses `@inertia` directive (server-rendered)
-- Without SSR: Uses client-side mounting
+### 3. Configuration
+- The middleware is registered in `bootstrap/app.php` with the alias `ssr`
+- The service provider is registered in `bootstrap/providers.php`
+- SSR settings are configured in `config/inertia.php`
 
 ## Usage
 

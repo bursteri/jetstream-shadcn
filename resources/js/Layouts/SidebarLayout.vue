@@ -7,6 +7,7 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/Components/ui/s
 import { Toaster } from 'vue-sonner';
 import 'vue-sonner/style.css'; // vue-sonner v2 requires this import
 import { useFlashMessages } from '@/composables/useFlashMessages';
+import SSRIndicator from '@/Components/SSRIndicator.vue';
 
 interface Props {
     title?: string;
@@ -33,7 +34,7 @@ useFlashMessages();
             <AppSidebar />
             <SidebarInset class="flex h-full flex-col overflow-hidden">
                 <header
-                    class="flex h-14 shrink-0 items-center gap-2 border-b border-zinc-900/5 transition-[width,height] ease-linear dark:border-zinc-800"
+                    class="flex h-14 shrink-0 items-center gap-2 border-b border-zinc-900/10 transition-[width,height] ease-linear dark:border-zinc-800"
                 >
                     <div class="flex items-center gap-2 px-4">
                         <SidebarTrigger class="-ml-1" />
@@ -74,5 +75,8 @@ useFlashMessages();
                 </div>
             </SidebarInset>
         </SidebarProvider>
+        
+        <!-- SSR Indicator -->
+        <SSRIndicator />
     </div>
 </template>

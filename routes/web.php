@@ -11,7 +11,7 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->middleware(['ssr']);
 
 Route::middleware([
     'auth:sanctum',
@@ -22,4 +22,4 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
-require __DIR__.'/socialstream.php';
+require __DIR__ . '/socialstream.php';

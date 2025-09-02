@@ -15,9 +15,6 @@ import SidebarLayout from '@/Layouts/SidebarLayout.vue';
                 <div class="aspect-video rounded-xl border border-zinc-900/5 bg-zinc-50 dark:border-zinc-900 dark:bg-zinc-900/50" />
                 <div class="aspect-video rounded-xl border border-zinc-900/5 bg-zinc-50 dark:border-zinc-900 dark:bg-zinc-900/50" />
             </div>
-            <div
-                class="min-h-[100vh] flex-1 rounded-xl border border-zinc-900/5 bg-zinc-50 md:min-h-min dark:border-zinc-900 dark:bg-zinc-900/50"
-            />
         </div>
     </SidebarLayout>
 </template>

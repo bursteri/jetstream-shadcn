@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
+import SSRIndicator from '@/Components/SSRIndicator.vue';
 </script>
 
 <template>
@@ -62,8 +63,8 @@ import { Head, Link } from '@inertiajs/vue3';
                                 >
                                     <span>Documentation</span>
                                     <svg
-                                        width="{10}"
-                                        height="{11}"
+                                        width="10"
+                                        height="11"
                                         viewBox="0 0 10 11"
                                         fill="none"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -93,8 +94,8 @@ import { Head, Link } from '@inertiajs/vue3';
                                 >
                                     <span>Laracasts</span>
                                     <svg
-                                        width="{10}"
-                                        height="{11}"
+                                        width="10"
+                                        height="11"
                                         viewBox="0 0 10 11"
                                         fill="none"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -783,5 +784,8 @@ import { Head, Link } from '@inertiajs/vue3';
             </main>
         </div>
         <div class="hidden h-14.5 lg:block"></div>
+        
+        <!-- SSR Indicator -->
+        <SSRIndicator />
     </div>
 </template>

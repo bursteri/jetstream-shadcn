@@ -5,6 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
+        
+        <!-- SSR Detection -->
+        <meta name="ssr-rendered" content="{{ request()->attributes->get('ssr_enabled', false) ? 'true' : 'false' }}">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://rsms.me/">
@@ -29,10 +32,6 @@
         </script>
     </head>
     <body class="font-sans antialiased">
-        @if(request()->attributes->get('ssr_enabled', false))
-            @inertia
-        @else
-            <div id="app" data-page="{{ json_encode($page) }}"></div>
-        @endif
+        @inertia
     </body>
 </html>
