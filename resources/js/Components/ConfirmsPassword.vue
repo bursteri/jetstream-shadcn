@@ -1,5 +1,6 @@
-<script setup>
+<script setup lang="ts">
 import { ref, reactive, nextTick } from 'vue';
+import axios from 'axios';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/Components/ui/dialog';
 import InputError from './InputError.vue';
 import { Button } from '@/Components/ui/button';
@@ -30,16 +31,16 @@ const form = reactive({
     processing: false,
 });
 
-const passwordInput = ref(null);
+const passwordInput = ref<HTMLInputElement | null>(null);
 
 const startConfirmingPassword = () => {
-    axios.get(route('password.confirmation')).then((response) => {
+    axios.get(route('password.confirmation')).then((response: any) => {
         if (response.data.confirmed) {
             emit('confirmed');
         } else {
             confirmingPassword.value = true;
 
-            setTimeout(() => passwordInput.value.focus(), 250);
+            setTimeout(() => passwordInput.value?.focus(), 250);
         }
     });
 };
@@ -57,10 +58,10 @@ const confirmPassword = () => {
             closeModal();
             nextTick().then(() => emit('confirmed'));
         })
-        .catch((error) => {
+        .catch((error: any) => {
             form.processing = false;
             form.error = error.response.data.errors.password[0];
-            passwordInput.value.focus();
+            passwordInput.value?.focus();
         });
 };
 

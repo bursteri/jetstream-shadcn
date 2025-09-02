@@ -1,5 +1,5 @@
-<script setup>
-import { ref } from 'vue';
+<script setup lang="ts">
+import { ref, type Ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { toast } from 'vue-sonner';
 import ActionSection from '@/Components/ActionSection.vue';
@@ -11,27 +11,28 @@ import { Label } from '@/Components/ui/label';
 import { Button } from '@/Components/ui/button';
 import SectionBorder from '@/Components/SectionBorder.vue';
 import { Input } from '@/Components/ui/input';
+import type { ApiToken } from '@/types';
 
-const props = defineProps({
-    tokens: Array,
-    availablePermissions: Array,
-    defaultPermissions: Array,
-});
+const props = defineProps<{
+    tokens: ApiToken[];
+    availablePermissions: string[];
+    defaultPermissions: string[];
+}>();
 
 const createApiTokenForm = useForm({
     name: '',
-    permissions: props.defaultPermissions,
+    permissions: props.defaultPermissions as string[],
 });
 
 const updateApiTokenForm = useForm({
-    permissions: [],
+    permissions: [] as string[],
 });
 
 const deleteApiTokenForm = useForm({});
 
 const displayingToken = ref(false);
-const managingPermissionsFor = ref(null);
-const apiTokenBeingDeleted = ref(null);
+const managingPermissionsFor: Ref<ApiToken | null> = ref(null);
+const apiTokenBeingDeleted: Ref<ApiToken | null> = ref(null);
 
 const createApiToken = () => {
     createApiTokenForm.post(route('api-tokens.store'), {
@@ -44,7 +45,7 @@ const createApiToken = () => {
     });
 };
 
-const manageApiTokenPermissions = (token) => {
+const manageApiTokenPermissions = (token: ApiToken) => {
     updateApiTokenForm.permissions = token.abilities;
     managingPermissionsFor.value = token;
 };
@@ -60,7 +61,7 @@ const updateApiToken = () => {
     });
 };
 
-const confirmApiTokenDeletion = (token) => {
+const confirmApiTokenDeletion = (token: ApiToken) => {
     apiTokenBeingDeleted.value = token;
 };
 

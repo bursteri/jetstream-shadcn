@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import {ref} from 'vue';
 import {useForm} from '@inertiajs/vue3';
 import { toast } from 'vue-sonner';
@@ -8,7 +8,7 @@ import InputError from '@/Components/InputError.vue';
 import { Label } from '@/Components/ui/label';
 import { Input } from '@/Components/ui/input';
 
-const passwordInput = ref(null);
+const passwordInput = ref<HTMLInputElement | null>(null);
 
 const form = useForm({
     current_password: '',
@@ -27,7 +27,7 @@ const setPassword = () => {
         onError: () => {
             if (form.errors.password) {
                 form.reset('password', 'password_confirmation');
-                passwordInput.value.focus();
+                passwordInput.value?.focus();
             }
         },
     });

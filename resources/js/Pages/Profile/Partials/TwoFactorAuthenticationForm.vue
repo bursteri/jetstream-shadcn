@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import { router, useForm, usePage } from '@inertiajs/vue3';
 import ActionSection from '@/Components/ActionSection.vue';
@@ -7,25 +7,28 @@ import { Button } from '@/Components/ui/button';
 import InputError from '@/Components/InputError.vue';
 import { Label } from '@/Components/ui/label';
 import { Input } from '@/Components/ui/input';
+import axios from 'axios';
 
-const props = defineProps({
-    requiresConfirmation: Boolean,
-});
+interface Props {
+    requiresConfirmation?: boolean;
+}
+
+const props = defineProps<Props>();
 
 const page = usePage();
 const enabling = ref(false);
 const confirming = ref(false);
 const disabling = ref(false);
-const qrCode = ref(null);
-const setupKey = ref(null);
-const recoveryCodes = ref([]);
+const qrCode = ref<string | null>(null);
+const setupKey = ref<string | null>(null);
+const recoveryCodes = ref<string[]>([]);
 
 const confirmationForm = useForm({
     code: '',
 });
 
 const twoFactorEnabled = computed(
-    () => ! enabling.value && page.props.auth.user?.two_factor_enabled,
+    () => ! enabling.value && (page.props as any).auth?.user?.two_factor_enabled,
 );
 
 watch(twoFactorEnabled, () => {
@@ -52,19 +55,19 @@ const enableTwoFactorAuthentication = () => {
     });
 };
 
-const showQrCode = () => {
+const showQrCode = (): Promise<void> => {
     return axios.get(route('two-factor.qr-code')).then(response => {
         qrCode.value = response.data.svg;
     });
 };
 
-const showSetupKey = () => {
+const showSetupKey = (): Promise<void> => {
     return axios.get(route('two-factor.secret-key')).then(response => {
         setupKey.value = response.data.secretKey;
     });
 }
 
-const showRecoveryCodes = () => {
+const showRecoveryCodes = (): Promise<void> => {
     return axios.get(route('two-factor.recovery-codes')).then(response => {
         recoveryCodes.value = response.data;
     });

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { toast } from 'vue-sonner';
@@ -8,12 +8,25 @@ import InputError from '@/Components/InputError.vue';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
 
-defineProps({
-    sessions: Array,
-});
+interface Session {
+    agent: {
+        browser?: string;
+        is_desktop: boolean;
+        platform?: string;
+    };
+    ip_address: string;
+    is_current_device: boolean;
+    last_active: string;
+}
+
+interface Props {
+    sessions?: Session[];
+}
+
+defineProps<Props>();
 
 const confirmingLogout = ref(false);
-const passwordInput = ref(null);
+const passwordInput = ref<HTMLInputElement | null>(null);
 
 const form = useForm({
     password: '',
@@ -22,7 +35,7 @@ const form = useForm({
 const confirmLogout = () => {
     confirmingLogout.value = true;
 
-    setTimeout(() => passwordInput.value.focus(), 250);
+    setTimeout(() => passwordInput.value?.focus(), 250);
 };
 
 const logoutOtherBrowserSessions = () => {
@@ -32,7 +45,7 @@ const logoutOtherBrowserSessions = () => {
             closeModal();
             toast.success('Other browser sessions logged out successfully.');
         },
-        onError: () => passwordInput.value.focus(),
+        onError: () => passwordInput.value?.focus(),
         onFinish: () => form.reset(),
     });
 };
@@ -58,7 +71,7 @@ const closeModal = () => {
             </div>
 
             <!-- Other Browser Sessions -->
-            <div v-if="sessions.length > 0" class="mt-5 space-y-6">
+            <div v-if="sessions && sessions.length > 0" class="mt-5 space-y-6">
                 <div v-for="(session, i) in sessions" :key="i" class="flex items-center">
                     <div>
                         <svg

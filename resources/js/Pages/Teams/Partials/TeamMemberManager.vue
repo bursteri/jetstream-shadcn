@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 import { router, useForm, usePage } from '@inertiajs/vue3';
 import { toast } from 'vue-sonner';
@@ -11,33 +11,68 @@ import { Label } from '@/Components/ui/label';
 import SectionBorder from '@/Components/SectionBorder.vue';
 import { Input } from '@/Components/ui/input';
 
-const props = defineProps({
-    team: Object,
-    availableRoles: Array,
-    userPermissions: Object,
-});
+interface User {
+    id: number;
+    name: string;
+    email: string;
+    profile_photo_url: string;
+    membership: {
+        role: string;
+    };
+}
+
+interface TeamInvitation {
+    id: number;
+    email: string;
+}
+
+interface Team {
+    id: number;
+    name: string;
+    users: User[];
+    team_invitations: TeamInvitation[];
+}
+
+interface Role {
+    key: string;
+    name: string;
+    description: string;
+    permissions: string[];
+}
+
+interface UserPermissions {
+    canAddTeamMembers: boolean;
+    canRemoveTeamMembers: boolean;
+    canUpdateTeamMembers: boolean;
+}
+
+const props = defineProps<{
+    team: Team;
+    availableRoles: Role[];
+    userPermissions: UserPermissions;
+}>();
 
 const page = usePage();
 
 const addTeamMemberForm = useForm({
     email: '',
-    role: null,
+    role: null as string | null,
 });
 
 const updateRoleForm = useForm({
-    role: null,
+    role: null as string | null,
 });
 
 const leaveTeamForm = useForm({});
 const removeTeamMemberForm = useForm({});
 
 const currentlyManagingRole = ref(false);
-const managingRoleFor = ref(null);
+const managingRoleFor = ref<User | null>(null);
 const confirmingLeavingTeam = ref(false);
-const teamMemberBeingRemoved = ref(null);
+const teamMemberBeingRemoved = ref<User | null>(null);
 
 const addTeamMember = () => {
-    addTeamMemberForm.post(route('team-members.store', props.team), {
+    addTeamMemberForm.post(route('team-members.store', { team: props.team.id }), {
         errorBag: 'addTeamMember',
         preserveScroll: true,
         onSuccess: () => {
@@ -47,21 +82,21 @@ const addTeamMember = () => {
     });
 };
 
-const cancelTeamInvitation = (invitation) => {
-    router.delete(route('team-invitations.destroy', invitation), {
+const cancelTeamInvitation = (invitation: TeamInvitation) => {
+    router.delete(route('team-invitations.destroy', { invitation: invitation.id }), {
         preserveScroll: true,
         onSuccess: () => toast.success('Team invitation cancelled.'),
     });
 };
 
-const manageRole = (teamMember) => {
+const manageRole = (teamMember: User) => {
     managingRoleFor.value = teamMember;
     updateRoleForm.role = teamMember.membership.role;
     currentlyManagingRole.value = true;
 };
 
 const updateRole = () => {
-    updateRoleForm.put(route('team-members.update', [props.team, managingRoleFor.value]), {
+    updateRoleForm.put(route('team-members.update', { team: props.team.id, user: managingRoleFor.value?.id }), {
         preserveScroll: true,
         onSuccess: () => {
             currentlyManagingRole.value = false;
@@ -75,15 +110,15 @@ const confirmLeavingTeam = () => {
 };
 
 const leaveTeam = () => {
-    leaveTeamForm.delete(route('team-members.destroy', [props.team, page.props.auth.user]));
+    leaveTeamForm.delete(route('team-members.destroy', { team: props.team.id, user: (page.props as any).auth.user.id }));
 };
 
-const confirmTeamMemberRemoval = (teamMember) => {
+const confirmTeamMemberRemoval = (teamMember: User) => {
     teamMemberBeingRemoved.value = teamMember;
 };
 
 const removeTeamMember = () => {
-    removeTeamMemberForm.delete(route('team-members.destroy', [props.team, teamMemberBeingRemoved.value]), {
+    removeTeamMemberForm.delete(route('team-members.destroy', { team: props.team.id, user: teamMemberBeingRemoved.value?.id }), {
         errorBag: 'removeTeamMember',
         preserveScroll: true,
         preserveState: true,
@@ -94,8 +129,8 @@ const removeTeamMember = () => {
     });
 };
 
-const displayableRole = (role) => {
-    return props.availableRoles.find((r) => r.key === role).name;
+const displayableRole = (role: string) => {
+    return props.availableRoles.find((r) => r.key === role)?.name || '';
 };
 </script>
 
@@ -256,7 +291,7 @@ const displayableRole = (role) => {
 
                                 <!-- Leave Team -->
                                 <button
-                                    v-if="$page.props.auth.user.id === user.id"
+                                    v-if="$page.props.auth?.user?.id === user.id"
                                     class="ms-6 cursor-pointer text-sm text-red-500"
                                     @click="confirmLeavingTeam"
                                 >

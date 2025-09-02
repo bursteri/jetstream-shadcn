@@ -1,7 +1,14 @@
-<script setup>
+<script setup lang="ts">
 import InputError from '@/Components/InputError.vue';
 import ProviderIcon from '@/Components/SocialstreamIcons/ProviderIcon.vue';
 import { Button } from '@/Components/ui/button';
+import { PropType } from 'vue';
+
+interface Provider {
+    id: string;
+    name: string;
+    buttonLabel?: string;
+}
 
 defineProps({
     prompt: {
@@ -13,16 +20,21 @@ defineProps({
         default: null,
     },
     providers: {
-        type: Array,
+        type: Array as PropType<Provider[]>,
+        default: () => [],
     },
     labels: {
-        type: Object,
+        type: Object as PropType<Record<string, string>>,
     },
 });
+
+const handleProviderClick = (providerId: string) => {
+    window.location.href = (window as any).route('oauth.redirect', { provider: providerId });
+};
 </script>
 
 <template>
-    <div v-if="providers.length" class="mt-6 mb-2 space-y-6">
+    <div v-if="providers && providers.length" class="mt-6 mb-2 space-y-6">
         <div
             class="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t"
         >
@@ -36,7 +48,7 @@ defineProps({
                 :key="provider.id"
                 variant="outline"
                 :as-child="true"
-                @click="window.location.href = route('oauth.redirect', provider.id)"
+                @click="() => handleProviderClick(provider.id)"
             >
                 <div class="flex items-center">
                     <ProviderIcon :provider="provider" classes="h-6 w-6" />
@@ -80,7 +92,7 @@ defineProps({
                 :key="provider.id"
                 variant="outline"
                 :as-child="true"
-                @click="window.location.href = route('oauth.redirect', provider.id)"
+                @click="() => handleProviderClick(provider.id)"
             >
                 <div class="flex items-center">
                     <ProviderIcon :provider="provider" classes="h-6 w-6" />

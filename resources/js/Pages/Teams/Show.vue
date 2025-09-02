@@ -1,15 +1,58 @@
-<script setup>
+<script setup lang="ts">
 import SidebarLayout from '@/Layouts/SidebarLayout.vue';
 import DeleteTeamForm from '@/Pages/Teams/Partials/DeleteTeamForm.vue';
 import SectionBorder from '@/Components/SectionBorder.vue';
 import TeamMemberManager from '@/Pages/Teams/Partials/TeamMemberManager.vue';
 import UpdateTeamNameForm from '@/Pages/Teams/Partials/UpdateTeamNameForm.vue';
 
-defineProps({
-    team: Object,
-    availableRoles: Array,
-    permissions: Object,
-});
+interface User {
+    id: number;
+    name: string;
+    email: string;
+    profile_photo_url: string;
+    membership: {
+        role: string;
+    };
+}
+
+interface TeamInvitation {
+    id: number;
+    email: string;
+}
+
+interface Team {
+    id: number;
+    name: string;
+    personal_team: boolean;
+    owner: {
+        name: string;
+        email: string;
+        profile_photo_url: string;
+    };
+    users: User[];
+    team_invitations: TeamInvitation[];
+}
+
+interface Role {
+    key: string;
+    name: string;
+    description: string;
+    permissions: string[];
+}
+
+interface Permissions {
+    canAddTeamMembers: boolean;
+    canDeleteTeam: boolean;
+    canRemoveTeamMembers: boolean;
+    canUpdateTeam: boolean;
+    canUpdateTeamMembers: boolean;
+}
+
+defineProps<{
+    team: Team;
+    availableRoles: Role[];
+    permissions: Permissions;
+}>();
 </script>
 
 <template>

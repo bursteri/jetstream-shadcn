@@ -1,16 +1,25 @@
 import type { Auth, JetstreamFeatures } from './index';
 
-interface SocialstreamProvider {
+export interface SocialstreamProvider {
     id: string;
     name: string;
     buttonLabel?: string;
 }
 
-interface Socialstream {
+export interface ConnectedAccount {
+    id: number;
+    provider: string;
+    avatar_path?: string;
+    created_at: string;
+}
+
+export interface Socialstream {
     show: boolean;
     prompt: string;
     labels: Record<string, string>;
     providers: SocialstreamProvider[];
+    connectedAccounts: ConnectedAccount[];
+    hasPassword: boolean;
 }
 
 declare module '@inertiajs/core' {

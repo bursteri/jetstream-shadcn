@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import ProviderIcon from '@/Components/SocialstreamIcons/ProviderIcon.vue';
 
 const props = defineProps({
@@ -20,7 +20,7 @@ const props = defineProps({
 
                 <div class="ml-2">
                     <div class="text-sm font-semibold text-zinc-600 dark:text-zinc-400">
-                        {{ provider.name }}
+                        {{ provider?.name }}
                     </div>
 
                     <div v-if="createdAt !== null" class="text-xs text-zinc-500">Connected {{ createdAt }}</div>

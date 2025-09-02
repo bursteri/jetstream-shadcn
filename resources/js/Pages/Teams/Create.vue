@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import SidebarLayout from '@/Layouts/SidebarLayout.vue';
 import CreateTeamForm from '@/Pages/Teams/Partials/CreateTeamForm.vue';
 </script>

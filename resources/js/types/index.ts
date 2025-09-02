@@ -51,10 +51,22 @@ export interface User {
     email: string;
     avatar?: string;
     profile_photo_url?: string;
+    profile_photo_path?: string;
     email_verified_at: string | null;
     current_team?: Team;
     current_team_id?: number;
     all_teams?: Team[];
+    two_factor_enabled?: boolean;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface ApiToken {
+    id: number;
+    name: string;
+    abilities: string[];
+    last_used_ago?: string;
+    last_used_at?: string | null;
     created_at: string;
     updated_at: string;
 }

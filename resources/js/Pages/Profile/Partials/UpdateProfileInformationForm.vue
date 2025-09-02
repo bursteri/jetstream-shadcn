@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 import { Link, router, useForm } from '@inertiajs/vue3';
 import { toast } from 'vue-sonner';
@@ -7,24 +7,27 @@ import InputError from '@/Components/InputError.vue';
 import { Label } from '@/Components/ui/label';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
+import type { User } from '@/types';
 
-const props = defineProps({
-    user: Object,
-});
+interface Props {
+    user: User;
+}
+
+const props = defineProps<Props>();
 
 const form = useForm({
     _method: 'PUT',
     name: props.user.name,
     email: props.user.email,
-    photo: null,
+    photo: null as File | null,
 });
 
-const verificationLinkSent = ref(null);
-const photoPreview = ref(null);
-const photoInput = ref(null);
+const verificationLinkSent = ref(false);
+const photoPreview = ref<string | null>(null);
+const photoInput = ref<HTMLInputElement | null>(null);
 
 const updateProfileInformation = () => {
-    if (photoInput.value) {
+    if (photoInput.value?.files?.[0]) {
         form.photo = photoInput.value.files[0];
     }
 
@@ -44,18 +47,18 @@ const sendEmailVerification = () => {
 };
 
 const selectNewPhoto = () => {
-    photoInput.value.click();
+    photoInput.value?.click();
 };
 
 const updatePhotoPreview = () => {
-    const photo = photoInput.value.files[0];
+    const photo = photoInput.value?.files?.[0];
 
     if (! photo) return;
 
     const reader = new FileReader();
 
     reader.onload = (e) => {
-        photoPreview.value = e.target.result;
+        photoPreview.value = e.target?.result as string;
     };
 
     reader.readAsDataURL(photo);
@@ -74,7 +77,7 @@ const deletePhoto = () => {
 
 const clearPhotoFileInput = () => {
     if (photoInput.value?.value) {
-        photoInput.value.value = null;
+        photoInput.value.value = '';
     }
 };
 </script>
@@ -91,7 +94,7 @@ const clearPhotoFileInput = () => {
 
         <template #form>
             <!-- Profile Photo -->
-            <div v-if="$page.props.jetstream.managesProfilePhotos" class="col-span-6 sm:col-span-4">
+            <div v-if="$page.props.jetstream?.managesProfilePhotos" class="col-span-6 sm:col-span-4">
                 <!-- Profile Photo File Input -->
                 <input
                     id="photo"
@@ -160,7 +163,7 @@ const clearPhotoFileInput = () => {
                 />
                 <InputError :message="form.errors.email" class="mt-2" />
 
-                <div v-if="$page.props.jetstream.hasEmailVerification && user.email_verified_at === null">
+                <div v-if="($page.props as any).jetstream?.hasEmailVerification && user.email_verified_at === null">
                     <p class="text-sm mt-2 dark:text-white">
                         Your email address is unverified.
 

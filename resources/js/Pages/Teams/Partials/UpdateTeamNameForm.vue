@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useForm } from '@inertiajs/vue3';
 import { toast } from 'vue-sonner';
 import FormSection from '@/Components/FormSection.vue';
@@ -7,17 +7,31 @@ import { Label } from '@/Components/ui/label';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
 
-const props = defineProps({
-    team: Object,
-    permissions: Object,
-});
+interface Team {
+    id: number;
+    name: string;
+    owner: {
+        name: string;
+        email: string;
+        profile_photo_url: string;
+    };
+}
+
+interface Permissions {
+    canUpdateTeam: boolean;
+}
+
+const props = defineProps<{
+    team: Team;
+    permissions: Permissions;
+}>();
 
 const form = useForm({
     name: props.team.name,
 });
 
 const updateTeamName = () => {
-    form.put(route('teams.update', props.team), {
+    form.put(route('teams.update', { team: props.team.id }), {
         errorBag: 'updateTeamName',
         preserveScroll: true,
         onSuccess: () => toast.success('Team name updated successfully.'),
